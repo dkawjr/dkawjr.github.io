@@ -3,761 +3,301 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>D.K. Adrian Williams Jr. — Physician-Scientist</title>
-<meta name="description" content="D.K. Adrian Williams Jr. — MD-PhD candidate, computational neuroscientist, and consultant advancing AI, EEG research, and health innovation.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>D. K. Adrian Williams Jr.</title>
+<meta name="description" content="D. K. Adrian Williams Jr. — MD-PhD candidate, computational neuroscientist, and consultant advancing AI, EEG research, and health innovation.">
 <style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --paper: #f4f1ea;
-  --paper-2: #ece8df;
-  --ink: #14130f;
-  --ink-soft: #45433c;
-  --ink-faint: #8a8678;
-  --line: #14130f;
-  --rule: rgba(20,19,15,0.16);
-  --accent: #b3331f;
-  --display: 'Fraunces', Georgia, serif;
-  --mono: 'Space Mono', ui-monospace, monospace;
-}
-
-html { font-size: 16px; scroll-behavior: smooth; }
+/* Intentionally near-unstyled. Times New Roman, black on white, no color. */
+html { -webkit-text-size-adjust: 100%; }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-/* faint paper grain via repeating gradient */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  background:
-    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(20,19,15,0.025) 39px, rgba(20,19,15,0.025) 40px);
-  mix-blend-mode: multiply;
-}
-
-::selection { background: var(--accent); color: var(--paper); }
-
-a { color: inherit; }
-
-.mono-label {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-
-/* ───────── Shell / margins ───────── */
-.shell {
-  max-width: 1280px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 19px;
+  line-height: 1.45;
+  color: #000;
+  background: #fff;
+  max-width: 42rem;
   margin: 0 auto;
-  padding: 0 clamp(1.25rem, 5vw, 5rem);
-  position: relative;
-  z-index: 2;
+  padding: 2.5rem 1.25rem 6rem;
 }
 
-/* ───────── Top masthead bar ───────── */
-.masthead {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--paper);
-  border-bottom: 1.5px solid var(--line);
-  mix-blend-mode: normal;
+/* links: the default underlined look, but black not blue */
+a { color: #000; }
+a:hover { color: #fff; background: #000; }
+a:focus { outline: 2px solid #000; outline-offset: 2px; }
+
+h1 {
+  font-weight: normal;
+  font-size: 2.4rem;
+  line-height: 1.05;
+  margin: 0 0 0.25rem;
+  letter-spacing: -0.01em;
 }
-.masthead-inner {
+h2 {
+  font-weight: normal;
+  font-size: 1.5rem;
+  margin: 2.5rem 0 0.75rem;
+}
+h3 { font-weight: normal; font-size: 1.15rem; margin: 0; }
+
+p { margin: 0 0 1rem; }
+
+hr { border: none; border-top: 1px solid #000; margin: 2.5rem 0; }
+
+small, .meta {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0;
+}
+
+/* monospace label rows */
+.mono { font-family: "Courier New", Courier, monospace; font-size: 0.82rem; }
+
+ul, ol { margin: 0 0 1rem; padding-left: 1.5rem; }
+li { margin: 0 0 0.35rem; }
+
+dl { margin: 0; }
+dt { font-weight: normal; margin-top: 1.25rem; }
+dt .yr { font-family: "Courier New", Courier, monospace; font-size: 0.78rem; display: block; }
+dd { margin: 0.15rem 0 0; }
+dd small { color: #000; }
+
+/* raw tables, collapsed borders — the spreadsheet look */
+table { border-collapse: collapse; width: 100%; margin: 0 0 1rem; }
+th, td {
+  border: 1px solid #000;
+  padding: 0.4rem 0.55rem;
+  text-align: left;
+  vertical-align: top;
+  font-size: 0.95rem;
+}
+th { font-weight: normal; font-family: "Courier New", Courier, monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
+td.yr { font-family: "Courier New", Courier, monospace; font-size: 0.78rem; white-space: nowrap; }
+
+/* the classic broken-image placeholder, on purpose */
+.broken {
+  border: 1px solid #000;
+  width: 160px;
+  height: 200px;
   display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 clamp(1.25rem, 5vw, 5rem);
-}
-.mast-name {
-  font-family: var(--mono);
-  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+  font-family: "Courier New", Courier, monospace;
   font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 0.95rem 0;
-  text-decoration: none;
-  white-space: nowrap;
+  text-align: center;
+  padding: 0.5rem;
+  float: right;
+  margin: 0 0 1rem 1.25rem;
 }
-.mast-name .dot { color: var(--accent); }
-.mast-nav { display: flex; }
-.mast-nav a {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--ink-soft);
-  padding: 0.95rem 0 0.95rem 1.6rem;
-  transition: color 0.25s;
-  position: relative;
-}
-.mast-nav a:hover { color: var(--accent); }
-.mast-nav .num { color: var(--ink-faint); margin-right: 0.35rem; }
-.mast-burger { display: none; }
-
-/* ───────── Hero / colophon ───────── */
-.hero {
-  border-bottom: 1.5px solid var(--line);
-  padding: clamp(3rem, 9vw, 7rem) 0 clamp(2.5rem, 6vw, 4.5rem);
-}
-.hero-top {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: clamp(2.5rem, 7vw, 5rem);
-}
-.hero-coords { max-width: 22ch; }
-.hero-coords .mono-label { display: block; margin-bottom: 0.35rem; }
-.hero-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  align-self: flex-start;
-}
-.hero-status .led {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  animation: blink 1.6s steps(1) infinite;
-}
-@keyframes blink { 50% { opacity: 0.25; } }
-
-.hero-title {
-  font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(2.8rem, 11vw, 8.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-  margin-bottom: clamp(1.8rem, 4vw, 3rem);
-}
-.hero-title em {
-  font-style: italic;
-  font-weight: 400;
-}
-.hero-title .amp { color: var(--accent); font-style: italic; }
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: clamp(1.5rem, 5vw, 4rem);
-  align-items: end;
-}
-.hero-lede {
-  font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(1.05rem, 2vw, 1.4rem);
-  line-height: 1.5;
-  color: var(--ink-soft);
-}
-.hero-lede b { color: var(--ink); font-weight: 500; }
-.hero-actions { display: flex; flex-direction: column; gap: 0; align-self: end; }
-.hero-actions a {
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 0.85rem 0;
-  border-top: 1px solid var(--rule);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: padding 0.3s, color 0.3s;
-}
-.hero-actions a:last-child { border-bottom: 1px solid var(--rule); }
-.hero-actions a .arr { color: var(--ink-faint); transition: transform 0.3s, color 0.3s; }
-.hero-actions a:hover { padding-left: 0.6rem; color: var(--accent); }
-.hero-actions a:hover .arr { transform: translateX(4px); color: var(--accent); }
-
-/* ───────── Marquee of affiliations ───────── */
-.marquee {
-  border-bottom: 1.5px solid var(--line);
-  overflow: hidden;
-  padding: 0.7rem 0;
-  background: var(--ink);
-  color: var(--paper);
-  position: relative;
-  z-index: 2;
-}
-.marquee-track {
-  display: flex;
-  white-space: nowrap;
-  width: max-content;
-  animation: scroll 38s linear infinite;
-}
-.marquee:hover .marquee-track { animation-play-state: paused; }
-.marquee-track span {
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 0 1.6rem;
-  opacity: 0.85;
-}
-.marquee-track span::after { content: '✦'; margin-left: 1.6rem; color: var(--accent); }
-@keyframes scroll { to { transform: translateX(-50%); } }
-
-/* ───────── Section scaffold ───────── */
-.section { border-bottom: 1.5px solid var(--line); padding: clamp(3rem, 7vw, 6rem) 0; }
-.section-head {
-  display: grid;
-  grid-template-columns: 5rem 1fr;
-  gap: 1rem;
-  align-items: baseline;
-  margin-bottom: clamp(2rem, 4vw, 3.25rem);
-}
-.section-num {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: var(--accent);
-  font-weight: 700;
-}
-.section-title {
-  font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(1.7rem, 4.5vw, 3.4rem);
-  line-height: 1.04;
-  letter-spacing: -0.01em;
-}
-.section-title em { font-style: italic; }
-
-/* ───────── About ───────── */
-.about-cols {
-  display: grid;
-  grid-template-columns: 5rem minmax(0,1.5fr) minmax(0,0.9fr);
-  gap: 1rem clamp(1.5rem, 4vw, 3.5rem);
-}
-.about-prose p {
-  font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(1rem, 1.7vw, 1.18rem);
-  line-height: 1.6;
-  color: var(--ink-soft);
-  margin-bottom: 1.4rem;
-}
-.about-prose p b { color: var(--ink); font-weight: 500; }
-.about-prose p:first-child::first-letter {
-  font-family: var(--display);
-  font-style: italic;
-  font-size: 3.6em;
-  float: left;
-  line-height: 0.72;
-  padding: 0.06em 0.12em 0 0;
-  color: var(--accent);
-}
-.about-side { font-family: var(--mono); }
-.stat-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  border-top: 1px solid var(--rule);
-  padding: 0.75rem 0;
-}
-.stat-row:last-of-type { border-bottom: 1px solid var(--rule); }
-.stat-row .n {
-  font-family: var(--display);
-  font-weight: 300;
-  font-size: 1.8rem;
-  line-height: 1;
-}
-.stat-row .l {
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  text-align: right;
-  max-width: 14ch;
-}
-.tags { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.tags .mono-label { width: 100%; margin-bottom: 0.3rem; }
-.tag {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.04em;
-  padding: 0.22rem 0.55rem;
-  border: 1px solid var(--rule);
-  transition: all 0.25s;
-}
-.tag:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-
-/* ───────── Generic two-col list (research / services / leadership) ───────── */
-.entry {
-  display: grid;
-  grid-template-columns: 5rem minmax(0,0.9fr) minmax(0,1.4fr);
-  gap: 1rem clamp(1.5rem, 4vw, 3.5rem);
-  padding: 1.6rem 0;
-  border-top: 1px solid var(--rule);
-  align-items: baseline;
-  transition: background 0.3s;
-}
-.entry:hover { background: var(--paper-2); }
-.entry:first-of-type { border-top: none; }
-.entry-idx { font-family: var(--mono); font-size: 0.66rem; color: var(--ink-faint); }
-.entry-h {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  line-height: 1.15;
-}
-.entry-h .org { display: block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-top: 0.45rem; }
-.entry-p { color: var(--ink-soft); font-size: 0.78rem; line-height: 1.6; }
-.entry-p a { color: var(--accent); text-decoration: none; border-bottom: 1px solid currentColor; }
-
-/* ───────── Ledger (experience / publications) ───────── */
-.ledger { width: 100%; }
-.ledger-row {
-  display: grid;
-  grid-template-columns: 5rem 9rem 1fr;
-  gap: 1rem clamp(1.25rem, 3vw, 2.5rem);
-  padding: 1.4rem 0;
-  border-top: 1px solid var(--rule);
-  align-items: baseline;
-  transition: background 0.3s, padding-left 0.3s;
-}
-.ledger-row:hover { background: var(--paper-2); padding-left: 0.6rem; }
-.ledger-when {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-.ledger-idx { font-family: var(--mono); font-size: 0.66rem; color: var(--accent); font-weight: 700; }
-.ledger-what h3 {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(1.05rem, 1.9vw, 1.4rem);
-  line-height: 1.18;
-  margin-bottom: 0.2rem;
-}
-.ledger-what h3 a { text-decoration: none; transition: color 0.25s; }
-.ledger-what h3 a:hover { color: var(--accent); }
-.ledger-what .sub {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.5rem;
-}
-.ledger-what p { color: var(--ink-soft); font-size: 0.78rem; line-height: 1.6; max-width: 62ch; }
-.ledger-what .meta { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-faint); margin-top: 0.35rem; }
-.ledger-what .pill {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 0.55rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  padding: 0.15rem 0.5rem;
-  margin-top: 0.6rem;
+.broken::before {
+  content: "\2716";
+  font-size: 1.1rem;
+  margin-right: 0.4rem;
 }
 
-.section-foot { margin-top: 2.5rem; padding-left: clamp(0, 0, 0); }
-.section-foot a {
-  font-family: var(--mono);
-  font-size: 0.64rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-bottom: 1.5px solid var(--ink);
-  padding-bottom: 0.2rem;
-  transition: color 0.25s, border-color 0.25s;
-}
-.section-foot a:hover { color: var(--accent); border-color: var(--accent); }
+/* nav: plain inline links */
+nav { font-family: "Courier New", Courier, monospace; font-size: 0.8rem; margin: 1rem 0 0; }
+nav a { margin-right: 0.25rem; }
 
-/* ───────── Press strip ───────── */
-.press a {
-  display: grid;
-  grid-template-columns: 5rem 9rem 1fr 2rem;
-  gap: 1rem clamp(1.25rem, 3vw, 2.5rem);
-  padding: 1.3rem 0;
-  border-top: 1px solid var(--rule);
-  align-items: baseline;
-  text-decoration: none;
-  transition: background 0.3s, padding-left 0.3s;
-}
-.press a:hover { background: var(--paper-2); padding-left: 0.6rem; }
-.press .src { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
-.press .ttl { font-family: var(--display); font-weight: 400; font-size: clamp(1rem, 1.7vw, 1.25rem); line-height: 1.2; }
-.press .ttl span { display: block; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: none; color: var(--ink-soft); margin-top: 0.3rem; }
-.press .go { text-align: right; font-family: var(--mono); color: var(--ink-faint); transition: transform 0.3s, color 0.3s; }
-.press a:hover .go { transform: translateX(5px); color: var(--accent); }
+.tag { font-family: "Courier New", Courier, monospace; font-size: 0.78rem; }
 
-/* ───────── Contact ───────── */
-#contact { border-bottom: none; }
-.contact-grid {
-  display: grid;
-  grid-template-columns: 5rem 1fr;
-  gap: 1rem clamp(1.5rem, 4vw, 3.5rem);
+.cursor::after {
+  content: "_";
+  animation: blink 1s steps(1) infinite;
 }
-.contact-big {
-  font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(2rem, 6vw, 4.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.01em;
-  margin-bottom: 2rem;
-}
-.contact-big em { font-style: italic; }
-.contact-big a { text-decoration: none; border-bottom: 2px solid var(--accent); transition: color 0.25s; }
-.contact-big a:hover { color: var(--accent); }
-.contact-lede { font-family: var(--display); font-weight: 300; font-size: clamp(1rem, 1.7vw, 1.2rem); color: var(--ink-soft); max-width: 56ch; line-height: 1.55; margin-bottom: 2.5rem; }
-.contact-links { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--rule); }
-.contact-links a {
-  font-family: var(--mono);
-  font-size: 0.64rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 0.9rem 1.6rem 0.9rem 0;
-  border-bottom: 1px solid var(--rule);
-  flex: 1 1 14rem;
-  display: flex;
-  justify-content: space-between;
-  transition: color 0.25s, padding-left 0.25s;
-}
-.contact-links a:hover { color: var(--accent); padding-left: 0.5rem; }
-.contact-links a .arr { color: var(--ink-faint); }
-.contact-links a:hover .arr { color: var(--accent); }
+@keyframes blink { 50% { opacity: 0; } }
 
-/* ───────── Footer / colophon ───────── */
-footer {
-  border-top: 1.5px solid var(--line);
-  padding: 2rem 0 3rem;
-}
-.foot-grid {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-.foot-grid b { color: var(--accent); }
-
-/* ───────── Reveal ───────── */
-.rv { opacity: 0; transform: translateY(14px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.rv.on { opacity: 1; transform: none; }
-
-/* ───────── Mobile ───────── */
-@media (max-width: 860px) {
-  .mast-nav { display: none; }
-  .mast-burger {
-    display: flex; flex-direction: column; gap: 4px; justify-content: center;
-    background: none; border: none; cursor: pointer; padding: 0.95rem 0;
-  }
-  .mast-burger span { width: 22px; height: 1.5px; background: var(--ink); }
-  .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .about-cols { grid-template-columns: 1fr; }
-  .about-side { border-top: 1px solid var(--rule); padding-top: 1.5rem; }
-  .entry { grid-template-columns: 2rem 1fr; }
-  .entry-p { grid-column: 1 / -1; }
-  .ledger-row { grid-template-columns: 2.5rem 1fr; }
-  .ledger-when { grid-column: 1 / -1; order: -1; }
-  .ledger-idx { grid-row: 2; }
-  .press a { grid-template-columns: 1fr 2rem; }
-  .press .src, .press .when { grid-column: 1 / -1; }
-  .section-head, .contact-grid { grid-template-columns: 2.5rem 1fr; }
-}
-
-.mobile-sheet {
-  position: fixed; inset: 0; z-index: 100;
-  background: var(--paper);
-  display: none; flex-direction: column;
-  justify-content: center; padding: 0 2rem;
-}
-.mobile-sheet.open { display: flex; }
-.mobile-sheet a {
-  font-family: var(--display); font-weight: 300; font-style: italic;
-  font-size: 2rem; text-decoration: none; padding: 0.4rem 0;
-  display: flex; gap: 1rem; align-items: baseline;
-}
-.mobile-sheet a .n { font-family: var(--mono); font-style: normal; font-size: 0.7rem; color: var(--accent); }
-.mobile-sheet .close { position: absolute; top: 1rem; right: 1.5rem; background: none; border: none; font-size: 2rem; cursor: pointer; }
+footer { margin-top: 3rem; }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
-  .hero-status .led { animation: none; }
-  .rv { opacity: 1; transform: none; transition: none; }
+  .cursor::after { animation: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- ░░ Masthead ░░ -->
-<header class="masthead">
-  <div class="masthead-inner">
-    <a href="#top" class="mast-name">Williams<span class="dot">.</span> D.K.A. Jr</a>
-    <nav class="mast-nav">
-      <a href="#about"><span class="num">01</span>About</a>
-      <a href="#research"><span class="num">02</span>Research</a>
-      <a href="#experience"><span class="num">03</span>Experience</a>
-      <a href="#publications"><span class="num">04</span>Writing</a>
-      <a href="#press"><span class="num">05</span>Press</a>
-      <a href="#leadership"><span class="num">06</span>Service</a>
-      <a href="#services"><span class="num">07</span>Work</a>
-      <a href="#contact"><span class="num">08</span>Contact</a>
-    </nav>
-    <button class="mast-burger" onclick="document.getElementById('sheet').classList.add('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+<header id="top">
+  <h1>D. K. Adrian Williams Jr.<span class="cursor"></span></h1>
+  <p class="mono">MD-PhD candidate &middot; computational neuroscientist &middot; Bronx, NY</p>
+  <nav>
+    [ <a href="#about">about</a> &middot;
+    <a href="#research">research</a> &middot;
+    <a href="#experience">experience</a> &middot;
+    <a href="#writing">writing</a> &middot;
+    <a href="#press">press</a> &middot;
+    <a href="#service">service</a> &middot;
+    <a href="#work">work</a> &middot;
+    <a href="#contact">contact</a> ]
+  </nav>
 </header>
 
-<!-- ░░ Mobile sheet ░░ -->
-<div class="mobile-sheet" id="sheet">
-  <button class="close" onclick="this.parentElement.classList.remove('open')" aria-label="Close">×</button>
-  <a href="#about" onclick="document.getElementById('sheet').classList.remove('open')"><span class="n">01</span>About</a>
-  <a href="#research" onclick="document.getElementById('sheet').classList.remove('open')"><span class="n">02</span>Research</a>
-  <a href="#experience" onclick="document.getElementById('sheet').classList.remove('open')"><span class="n">03</span>Experience</a>
-  <a href="#publications" onclick="document.getElementById('sheet').classList.remove('open')"><span class="n">04</span>Writing</a>
-  <a href="#press" onclick="document.getElementById('sheet').classList.remove('open')"><span class="n">05</span>Press</a>
-  <a href="#leadership" onclick="document.getElementById('sheet').classList.remove('open')"><span class="n">06</span>Service</a>
-  <a href="#services" onclick="document.getElementById('sheet').classList.remove('open')"><span class="n">07</span>Work</a>
-  <a href="#contact" onclick="document.getElementById('sheet').classList.remove('open')"><span class="n">08</span>Contact</a>
-</div>
+<hr>
 
-<main class="shell" id="top">
+<p>
+A future physician-scientist working at the intersection of computational
+neuroscience, biomedical imaging, and health innovation &mdash; using EEG,
+machine learning, and AI to decode the brain and reshape clinical care.
+</p>
+<p class="mono">
+status: open for consulting / tutoring / speaking<br>
+links:
+<a href="https://scholar.google.com/citations?user=YP4eTi4AAAAJ&hl=en">google scholar</a> /
+<a href="https://www.linkedin.com/in/dkawjr">linkedin</a> /
+<a href="https://x.com/dkawjr">x.com/dkawjr</a> /
+<a href="mailto:connectdkaw@gmail.com">connectdkaw@gmail.com</a>
+</p>
+<p class="mono">
+affiliations: Albert Einstein College of Medicine, Harvard Medical School,
+Weill Cornell Medicine, Regeneron Pharmaceuticals, NIH-Oxford-Cambridge,
+United Nations &middot; WHO
+</p>
 
-  <!-- ░░ Hero ░░ -->
-  <section class="hero">
-    <div class="hero-top">
-      <div class="hero-coords">
-        <span class="mono-label">Physician-Scientist · Est. work since 2018</span>
-        <span class="mono-label">Bronx, New York · 40.85° N, 73.84° W</span>
-      </div>
-      <div class="hero-status"><span class="led"></span>Open — consulting · tutoring · speaking</div>
-    </div>
+<hr>
 
-    <h1 class="hero-title">D.K. Adrian<br><em>Williams</em> <span class="amp">Jr.</span></h1>
+<h2 id="about">&sect; 1 &nbsp; About</h2>
+<div class="broken">portrait.jpg<br>(not&nbsp;loaded)</div>
+<p>
+Adrian is an MD-PhD student in the NIH-funded Medical Scientist Training
+Program at Albert Einstein College of Medicine. His PhD work in the
+Coen-Cagli Lab sits where computational neuroscience, EEG-based neuroimaging,
+and machine learning meet &mdash; decoding real-time visual segmentation in
+autism to surface neural biomarkers for early diagnosis and precision
+subtyping.
+</p>
+<p>
+Beyond the lab he is a builder and consultant. As COO and co-founder of
+Focused Future LLC, he develops AI-powered tools for mental health assessment.
+He has advised executives, written and taught coursework across universities,
+and held leadership posts spanning faculty senate, review boards, and national
+advocacy &mdash; from the Ohio statehouse to the World Health Assembly in
+Geneva. He is a 2025 Cell Rising Black Scientist Awardee (Honorable Mention),
+a Harvard Medical School research fellow, and a Weill Cornell Leadership
+Alliance alumnus.
+</p>
+<p class="mono">
+by the numbers: 12+ publications &middot; 103+ citations &middot; h-index 4 &middot; 5 research institutions
+</p>
+<p class="mono">
+tools: Python, MATLAB, R, Machine Learning, Deep Learning, EEG, fMRI/DTI,
+LLMs, FSL, Statistical Modeling
+</p>
 
-    <div class="hero-grid">
-      <p class="hero-lede">A future physician-scientist working at the seam of <b>computational neuroscience</b>, biomedical imaging, and health innovation — using <b>EEG, machine learning, and AI</b> to decode the brain and reshape clinical care.</p>
-      <div class="hero-actions">
-        <a href="#contact">Get in touch <span class="arr">→</span></a>
-        <a href="https://scholar.google.com/citations?user=YP4eTi4AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar <span class="arr">↗</span></a>
-        <a href="https://x.com/dkawjr" target="_blank" rel="noopener">@dkawjr <span class="arr">↗</span></a>
-      </div>
-    </div>
-  </section>
-</main>
+<hr>
 
-<!-- ░░ Marquee ░░ -->
-<div class="marquee">
-  <div class="marquee-track">
-    <span>Albert Einstein College of Medicine</span><span>Harvard Medical School</span><span>Weill Cornell Medicine</span><span>Regeneron Pharmaceuticals</span><span>NIH-Oxford-Cambridge</span><span>United Nations · WHO</span>
-    <span>Albert Einstein College of Medicine</span><span>Harvard Medical School</span><span>Weill Cornell Medicine</span><span>Regeneron Pharmaceuticals</span><span>NIH-Oxford-Cambridge</span><span>United Nations · WHO</span>
-  </div>
-</div>
+<h2 id="research">&sect; 2 &nbsp; Research interests</h2>
+<ol>
+  <li><b>Computational Neuroelectrophysiology.</b> Decoding real-time visual processing in autism spectrum disorder using EEG and machine learning to uncover neural biomarkers for diagnosis and precision subtyping.</li>
+  <li><b>AI &amp; Machine Learning in Healthcare.</b> Deep learning architectures for medical imaging, clinical decision support, and large language model evaluation across specialties.</li>
+  <li><b>Biomedical Imaging.</b> Computational approaches to neuroimaging (EEG/fMRI/DTI) and digital pathology for cancer detection and neurodevelopmental research.</li>
+  <li><b>Clinical Informatics &amp; Health Innovation.</b> EHR-based research, automated research platforms, and digital health tools bridging data science with patient outcomes and equity.</li>
+  <li><b>Translational Psychiatry.</b> Investigating ketamine's network-plasticity effects and psychiatric comorbidities in critical care settings.</li>
+  <li><b>Health Disparities &amp; Public Health.</b> Sociodemographic factors in medical education, retention initiatives, and equitable access to emerging healthcare technology.</li>
+</ol>
 
-<main class="shell">
+<hr>
 
-  <!-- ░░ 01 About ░░ -->
-  <section class="section" id="about">
-    <div class="section-head rv">
-      <div class="section-num">01</div>
-      <h2 class="section-title">Physician-scientist <em>in the making</em></h2>
-    </div>
-    <div class="about-cols">
-      <div></div>
-      <div class="about-prose rv">
-        <p>Adrian is an MD-PhD student in the NIH-funded Medical Scientist Training Program at <b>Albert Einstein College of Medicine</b>. His PhD work in the Coen-Cagli Lab sits where computational neuroscience, EEG-based neuroimaging, and machine learning meet — decoding real-time visual segmentation in autism to surface neural biomarkers for early diagnosis and precision subtyping.</p>
-        <p>Beyond the lab he is a builder and consultant. As COO and co-founder of <b>Focused Future LLC</b>, he develops AI-powered tools for mental health assessment. He has advised executives, written and taught coursework across universities, and held leadership posts spanning faculty senate, review boards, and national advocacy — from the Ohio statehouse to the World Health Assembly in Geneva. He is a 2025 Cell Rising Black Scientist Awardee (Honorable Mention), a Harvard Medical School research fellow, and a Weill Cornell Leadership Alliance alumnus.</p>
-      </div>
-      <div class="about-side rv">
-        <div class="stat-row"><span class="n">12+</span><span class="l">Publications</span></div>
-        <div class="stat-row"><span class="n">103+</span><span class="l">Citations</span></div>
-        <div class="stat-row"><span class="n">04</span><span class="l">h-index · Scholar</span></div>
-        <div class="stat-row"><span class="n">05</span><span class="l">Research institutions</span></div>
-        <div class="tags">
-          <span class="mono-label">Tools &amp; methods</span>
-          <span class="tag">Python</span><span class="tag">MATLAB</span><span class="tag">R</span>
-          <span class="tag">Machine Learning</span><span class="tag">Deep Learning</span>
-          <span class="tag">EEG</span><span class="tag">fMRI / DTI</span><span class="tag">LLMs</span>
-          <span class="tag">FSL</span><span class="tag">Stats Modeling</span>
-        </div>
-      </div>
-    </div>
-  </section>
+<h2 id="experience">&sect; 3 &nbsp; Experience</h2>
+<dl>
+  <dt><span class="yr">SPRING 2026</span><b>Teaching Specialist &mdash; Adjunct Faculty</b>, University of Minnesota (CCAPS)</dt>
+  <dd>Co-teaching INET 3011W (Social Impact of Information Technology) and INET 4082W (IT Infrastructure Projects and Processes).</dd>
 
-  <!-- ░░ 02 Research ░░ -->
-  <section class="section" id="research">
-    <div class="section-head rv">
-      <div class="section-num">02</div>
-      <h2 class="section-title">Areas of <em>interest</em></h2>
-    </div>
-    <div class="research-list">
-      <div class="entry rv"><div class="entry-idx">i</div><div class="entry-h">Computational Neuroelectrophysiology<span class="org">EEG · Machine Learning</span></div><div class="entry-p">Decoding real-time visual processing in autism spectrum disorder to uncover neural biomarkers for diagnosis and precision subtyping.</div></div>
-      <div class="entry rv"><div class="entry-idx">ii</div><div class="entry-h">AI &amp; ML in Healthcare<span class="org">Clinical Decision Support</span></div><div class="entry-p">Deep learning architectures for medical imaging, clinical decision support, and large language model evaluation across specialties.</div></div>
-      <div class="entry rv"><div class="entry-idx">iii</div><div class="entry-h">Biomedical Imaging<span class="org">EEG / fMRI / DTI</span></div><div class="entry-p">Computational approaches to neuroimaging and digital pathology for cancer detection and neurodevelopmental research.</div></div>
-      <div class="entry rv"><div class="entry-idx">iv</div><div class="entry-h">Clinical Informatics<span class="org">Health Innovation</span></div><div class="entry-p">EHR-based research, automated research platforms, and digital health tools bridging data science with patient outcomes and equity.</div></div>
-      <div class="entry rv"><div class="entry-idx">v</div><div class="entry-h">Translational Psychiatry<span class="org">Interventional</span></div><div class="entry-p">Investigating ketamine's network-plasticity effects and psychiatric comorbidities in critical care settings.</div></div>
-      <div class="entry rv"><div class="entry-idx">vi</div><div class="entry-h">Health Disparities<span class="org">Public Health</span></div><div class="entry-p">Sociodemographic factors in medical education, retention initiatives, and equitable access to emerging healthcare technology.</div></div>
-    </div>
-  </section>
+  <dt><span class="yr">SUMMER 2024</span><b>Adjunct Faculty &mdash; STEM Exploration Camp</b>, Iona College</dt>
+  <dd>Designed a three-week STEM curriculum for four instructors and 40+ high school students across neuroscience, genetics, and public health, ending in student research presentations.</dd>
 
-  <!-- ░░ 03 Experience ░░ -->
-  <section class="section" id="experience">
-    <div class="section-head rv">
-      <div class="section-num">03</div>
-      <h2 class="section-title">Research &amp; professional <em>record</em></h2>
-    </div>
-    <div class="ledger">
-      <div class="ledger-row rv"><div class="ledger-when">Spring 2026</div><div class="ledger-idx">01</div><div class="ledger-what"><h3>Teaching Specialist — Adjunct Faculty</h3><div class="sub">University of Minnesota · CCAPS</div><p>Co-teaching INET 3011W (Social Impact of Information Technology) and INET 4082W (IT Infrastructure Projects and Processes).</p></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">Summer 2024</div><div class="ledger-idx">02</div><div class="ledger-what"><h3>Adjunct Faculty — STEM Exploration Camp</h3><div class="sub">Iona College</div><p>Designed a three-week STEM curriculum for four instructors and 40+ high school students across neuroscience, genetics, and public health, ending in student research presentations.</p></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">2023 — Present</div><div class="ledger-idx">03</div><div class="ledger-what"><h3>PhD Research — Coen-Cagli Lab</h3><div class="sub">Albert Einstein College of Medicine</div><p>Applying EEG and machine learning to decode real-time visual segmentation in autism. Qualifying exam passed; MSc in Biomedical Sciences (Neuroscience) awarded May 2025.</p></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">2023 — 2024</div><div class="ledger-idx">04</div><div class="ledger-what"><h3>Clinical Fellow — Moonshots Team</h3><div class="sub">Glass Health</div><p>Researched collaborations with NASA and government entities, developed aerospace-healthcare partnership strategy, and wrote evidence-based medical articles using advanced language models.</p></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">2022 — 2026</div><div class="ledger-idx">05</div><div class="ledger-what"><h3>JEDI Program — Development Innovation Unit</h3><div class="sub">Regeneron Pharmaceuticals</div><p>Reviewed clinical research and biotech literature; assembled rapid market-landscape research, scientific reviews, and operational innovation cases.</p></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">2020 — Present</div><div class="ledger-idx">06</div><div class="ledger-what"><h3>Chief Operating Officer &amp; Co-Founder</h3><div class="sub">Focused Future, LLC</div><p>Third employee of a mental-health AI assessment startup. Leading quantitative and qualitative opportunity analysis and supporting business development.</p></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">2019 — 2022</div><div class="ledger-idx">07</div><div class="ledger-what"><h3>Research Associate — Liston Lab</h3><div class="sub">Weill Cornell Medical College</div><p>Built a computational neuroimaging pipeline analyzing individual differences in brain responses to TMS using DTI, in collaboration with the Max Planck Institute.</p></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">Summer 2018</div><div class="ledger-idx">08</div><div class="ledger-what"><h3>Research Fellow — Gunawardena Lab</h3><div class="sub">Harvard Medical School</div><p>Developed a modular pipeline predicting cis-regulatory elements and transcription-factor binding sites in C. elegans, leading a comparative analysis of neuronal type-specification evolution.</p></div></div>
-    </div>
-  </section>
+  <dt><span class="yr">2023 &ndash; PRESENT</span><b>PhD Research &mdash; Coen-Cagli Lab</b>, Albert Einstein College of Medicine</dt>
+  <dd>Applying EEG and machine learning to decode real-time visual segmentation in autism. Qualifying exam passed; MSc in Biomedical Sciences (Neuroscience) awarded May 2025.</dd>
 
-  <!-- ░░ 04 Publications ░░ -->
-  <section class="section" id="publications">
-    <div class="section-head rv">
-      <div class="section-num">04</div>
-      <h2 class="section-title">Selected <em>writing</em></h2>
-    </div>
-    <div class="ledger">
-      <div class="ledger-row rv"><div class="ledger-when">2025</div><div class="ledger-idx">01</div><div class="ledger-what"><h3><a href="https://www.cell.com/iscience/fulltext/S2589-0042(25)00036-7" target="_blank" rel="noopener">The Sprained Mind</a></h3><p class="meta">Williams Jr., D.K.A. · Cell Press — iScience</p><span class="pill">Cell Rising Black Scientist Award</span></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">2024</div><div class="ledger-idx">02</div><div class="ledger-what"><h3><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10967469/" target="_blank" rel="noopener">Sociodemographic Factors &amp; Research Experience Impact MD-PhD Program Acceptance</a></h3><p class="meta">Williams DKA, Christophers B, Keyes T, et al. · JCI Insight</p><span class="pill">Original Research</span></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">2025</div><div class="ledger-idx">03</div><div class="ledger-what"><h3><a href="https://www.neurology.org/doi/10.1212/CPJ.0000000000200450" target="_blank" rel="noopener">Cerebrovascular Health Among Sex- and Gender-Diverse People</a></h3><p class="meta">L'Erario ZP, … Adrian Williams DK, et al. · Neurology: Clinical Practice</p><span class="pill">Narrative Review</span></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">2024</div><div class="ledger-idx">04</div><div class="ledger-what"><h3><a href="https://ieeexplore.ieee.org/document/10817580/" target="_blank" rel="noopener">Breast Cancer Detection using Mammography: Image Processing to Deep Learning</a></h3><p class="meta">Qureshi SA, et al. · IEEE Access</p><span class="pill">IEEE</span></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">2024</div><div class="ledger-idx">05</div><div class="ledger-what"><h3><a href="https://tcr.amegroups.org/article/view/86183/html" target="_blank" rel="noopener">Digital Pathology, Deep Learning, and Cancer: A Narrative Review</a></h3><p class="meta">Williams Jr. DKA, Graifman G, Hussain N, et al. · Translational Cancer Research</p><span class="pill">First Author</span></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">2024</div><div class="ledger-idx">06</div><div class="ledger-what"><h3><a href="https://www.sciencedirect.com/science/article/pii/S2666521224000395" target="_blank" rel="noopener">Exploring the Business Aspects of Digital Pathology &amp; Deep Learning in Cancers</a></h3><p class="meta">Reddy A, Williams DKA, et al. · Intelligence-Based Medicine</p><span class="pill">Original Research</span></div></div>
-      <div class="ledger-row rv"><div class="ledger-when">2024</div><div class="ledger-idx">07</div><div class="ledger-what"><h3><a href="https://journals.sagepub.com/doi/10.1177/23821205241264695" target="_blank" rel="noopener">Exploring the Usage of ChatGPT Among Medical Students in the United States</a></h3><p class="meta">Zhang JS, Yoon C, Williams DKA, Pinkas A · J Med Educ Curric Dev</p><span class="pill">Medical Education</span></div></div>
-    </div>
-    <div class="section-foot rv"><a href="https://scholar.google.com/citations?user=YP4eTi4AAAAJ&hl=en" target="_blank" rel="noopener">View all on Google Scholar ↗</a></div>
-  </section>
+  <dt><span class="yr">2023 &ndash; 2024</span><b>Clinical Fellow &mdash; Moonshots Team</b>, Glass Health</dt>
+  <dd>Researched collaborations with NASA and government entities, developed aerospace-healthcare partnership strategy, and wrote evidence-based medical articles using advanced language models.</dd>
 
-  <!-- ░░ 05 Press ░░ -->
-  <section class="section" id="press">
-    <div class="section-head rv">
-      <div class="section-num">05</div>
-      <h2 class="section-title">Press &amp; <em>features</em></h2>
-    </div>
-    <div class="press">
-      <a href="https://www.cell.com/iscience/fulltext/S2589-0042(25)00036-7" target="_blank" rel="noopener" class="rv"><div class="src">Cell Press · iScience</div><div class="when ledger-when">Feb 2025</div><div class="ttl">"The Sprained Mind"<span>Award-winning essay in the 5th Annual Rising Black Scientists Awards on visible injury and invisible psychiatric suffering.</span></div><div class="go">↗</div></a>
-      <a href="https://elsevierfoundation.org/winners-of-5th-annual-rising-black-scientists-awards-announced/" target="_blank" rel="noopener" class="rv"><div class="src">Elsevier Foundation</div><div class="when ledger-when">Feb 2025</div><div class="ttl">5th Annual Rising Black Scientists Awards<span>Honorable mention alongside winners from Stanford, Morehouse, and other leading institutions.</span></div><div class="go">↗</div></a>
-      <a href="https://montefioreeinstein.org/news/2023/05/01/inaugural-impact-day-showcases-medical-student-research-and-commitment-service" target="_blank" rel="noopener" class="rv"><div class="src">Montefiore Einstein</div><div class="when ledger-when">May 2023</div><div class="ttl">Inaugural Impact Day — Award Winner<span>Won at Einstein's first Impact Day for a poster later published in JCI Insight.</span></div><div class="go">↗</div></a>
-      <a href="https://blogs.einsteinmed.edu/blog/2023/08/23/first-year-medical-student-aftershocks/" target="_blank" rel="noopener" class="rv"><div class="src">Einstein · Pulse Magazine</div><div class="when ledger-when">Aug 2023</div><div class="ttl">"Aftershocks" — My First Code<span>A personal essay on a patient code during an ER rotation, now in Einstein's core curriculum.</span></div><div class="go">↗</div></a>
-      <a href="https://www.watchtheyard.com/leadership-highlight/leadership-highlight-d-k-adrian-williams-the-sga-president-of-wright-state-university/" target="_blank" rel="noopener" class="rv"><div class="src">Watch The Yard</div><div class="when ledger-when">Mar 2021</div><div class="ttl">Leadership Highlight: SGA President<span>Featured as a standout college leader, on Retain the 9, a pandemic, and the path to medicine.</span></div><div class="go">↗</div></a>
-      <a href="https://webapp2.wright.edu/web1/newsroom/2021/04/26/governor-dewine-to-address-students-during-wright-state-universitys-spring-commencement-ceremonies/" target="_blank" rel="noopener" class="rv"><div class="src">Wright State Newsroom</div><div class="when ledger-when">Apr 2021</div><div class="ttl">Commencement Speaker with Gov. DeWine<span>Delivered the spring commencement address, graduating magna cum laude.</span></div><div class="go">↗</div></a>
-      <a href="https://higherlearningadvocates.org/2020/04/15/adrian-williams-wright-state-university/" target="_blank" rel="noopener" class="rv"><div class="src">Higher Learning Advocates</div><div class="when ledger-when">Apr 2020</div><div class="ttl">Leading a Student Body Through a Pandemic<span>Invited essay on leading 13,000+ students through early COVID-19.</span></div><div class="go">↗</div></a>
-      <a href="https://webapp2.wright.edu/web1/newsroom/2019/03/11/wright-state-working-to-retain-and-support-more-underrepresented-students/" target="_blank" rel="noopener" class="rv"><div class="src">Wright State Newsroom</div><div class="when ledger-when">Mar 2019</div><div class="ttl">Retain the 9: A Retention Initiative<span>Co-founded an initiative achieving a 4% rise in minority retention and a new office of retention.</span></div><div class="go">↗</div></a>
-    </div>
-  </section>
+  <dt><span class="yr">2022 &ndash; 2026</span><b>JEDI Program &mdash; Development Innovation Unit</b>, Regeneron Pharmaceuticals</dt>
+  <dd>Reviewed clinical research and biotech literature; assembled rapid market-landscape research, scientific reviews, and operational innovation cases.</dd>
 
-  <!-- ░░ 06 Leadership ░░ -->
-  <section class="section" id="leadership">
-    <div class="section-head rv">
-      <div class="section-num">06</div>
-      <h2 class="section-title">Beyond the <em>bench</em></h2>
-    </div>
-    <div class="leadership-list">
-      <div class="entry rv"><div class="entry-idx">i</div><div class="entry-h">Executive Education Council Member<span class="org">Albert Einstein · 2025–Present</span></div><div class="entry-p">Nominated by Dean Kang to the executive advisory council overseeing accreditation, CQI, and institution-wide educational initiatives.</div></div>
-      <div class="entry rv"><div class="entry-idx">ii</div><div class="entry-h">MSTP Admissions Committee<span class="org">Albert Einstein · 2025–2027</span></div><div class="entry-p">One of two student members with full voting rights on MD-PhD admissions for the Medical Scientist Training Program.</div></div>
-      <div class="entry rv"><div class="entry-idx">iii</div><div class="entry-h">OASC Tutoring Committee<span class="org">Albert Einstein · 2025–Present</span></div><div class="entry-p">Coordinating peer tutoring and academic-success programming; tutored 9+ students in research and college prep.</div></div>
-      <div class="entry rv"><div class="entry-idx">iv</div><div class="entry-h">Faculty Senate Senator<span class="org">Albert Einstein · 2023–2024</span></div><div class="entry-p">Student senator representing the medical student body in institutional governance and policy.</div></div>
-      <div class="entry rv"><div class="entry-idx">v</div><div class="entry-h">73rd Student Body President<span class="org">Wright State University · 2018–2021</span></div><div class="entry-p">Represented 13,000+ students through a faculty strike and a pandemic; managed a $120K+ budget and testified at the Ohio statehouse.</div></div>
-      <div class="entry rv"><div class="entry-idx">vi</div><div class="entry-h">North American Representative<span class="org">UAEM · WHO · 2018</span></div><div class="entry-p">One of three chosen to represent North America at the 71st World Health Assembly at the UN in Geneva.</div></div>
-      <div class="entry rv"><div class="entry-idx">vii</div><div class="entry-h">Executive Director<span class="org">Ohio Student Government Assoc. · 2018–2020</span></div><div class="entry-p">Represented 500,000+ students from 14 public institutions as the primary student voice to Ohio legislators.</div></div>
-    </div>
-  </section>
+  <dt><span class="yr">2020 &ndash; PRESENT</span><b>Chief Operating Officer &amp; Co-Founder</b>, Focused Future, LLC</dt>
+  <dd>Third employee of a mental-health AI assessment startup. Leading quantitative and qualitative opportunity analysis and supporting business development.</dd>
 
-  <!-- ░░ 07 Services ░░ -->
-  <section class="section" id="services">
-    <div class="section-head rv">
-      <div class="section-num">07</div>
-      <h2 class="section-title">Work <em>with me</em></h2>
-    </div>
-    <div class="services-list">
-      <div class="entry rv"><div class="entry-idx">a</div><div class="entry-h">Executive Consulting</div><div class="entry-p">Strategic advisory for healthcare executives, AI &amp; health-innovation leaders, and biotech orgs — market landscape analysis, operational innovation, and strategic research. <a href="#contact">Inquire →</a></div></div>
-      <div class="entry rv"><div class="entry-idx">b</div><div class="entry-h">Academic Tutoring</div><div class="entry-p">One-on-one and small-group tutoring in research methodology, college prep, STEM, and medical-school admissions; 9+ students mentored. <a href="#contact">Get started →</a></div></div>
-      <div class="entry rv"><div class="entry-idx">c</div><div class="entry-h">Curriculum Development</div><div class="entry-p">Coursework and programs at the intersection of STEM, health, and technology — built for North Central University, Iona College, and the University of Minnesota. <a href="#contact">Learn more →</a></div></div>
-      <div class="entry rv"><div class="entry-idx">d</div><div class="entry-h">Speaking &amp; Keynotes</div><div class="entry-p">Keynote and commencement speaking on health innovation, advocacy, AI in medicine, and the physician-scientist journey — from legislatures to the WHO. <a href="#contact">Book →</a></div></div>
-    </div>
-  </section>
+  <dt><span class="yr">2019 &ndash; 2022</span><b>Research Associate &mdash; Liston Lab</b>, Weill Cornell Medical College</dt>
+  <dd>Built a computational neuroimaging pipeline analyzing individual differences in brain responses to TMS using DTI, in collaboration with the Max Planck Institute.</dd>
 
-  <!-- ░░ 08 Contact ░░ -->
-  <section class="section" id="contact">
-    <div class="section-head rv">
-      <div class="section-num">08</div>
-      <h2 class="section-title">Let's <em>work together</em></h2>
-    </div>
-    <div class="contact-grid">
-      <div></div>
-      <div>
-        <p class="contact-big rv">Say hello —<br><a href="mailto:connectdkaw@gmail.com">connectdkaw@gmail.com</a></p>
-        <p class="contact-lede rv">Open to research collaborations, executive consulting, academic tutoring, curriculum development, speaking, and conversations on the future of computational neuroscience and health innovation.</p>
-        <div class="contact-links rv">
-          <a href="mailto:connectdkaw@gmail.com">Email <span class="arr">→</span></a>
-          <a href="https://www.linkedin.com/in/dkawjr" target="_blank" rel="noopener">LinkedIn <span class="arr">↗</span></a>
-          <a href="https://x.com/dkawjr" target="_blank" rel="noopener">X / Twitter <span class="arr">↗</span></a>
-          <a href="https://scholar.google.com/citations?user=YP4eTi4AAAAJ&hl=en" target="_blank" rel="noopener">Scholar <span class="arr">↗</span></a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <dt><span class="yr">SUMMER 2018</span><b>Research Fellow &mdash; Gunawardena Lab</b>, Harvard Medical School</dt>
+  <dd>Developed a modular pipeline predicting cis-regulatory elements and transcription-factor binding sites in C. elegans, leading a comparative analysis of neuronal type-specification evolution.</dd>
+</dl>
 
-</main>
+<hr>
+
+<h2 id="writing">&sect; 4 &nbsp; Selected writing</h2>
+<table>
+  <tr><th>Yr</th><th>Title</th><th>Venue</th></tr>
+  <tr><td class="yr">2025</td><td><a href="https://www.cell.com/iscience/fulltext/S2589-0042(25)00036-7">The Sprained Mind</a> <small>[Cell Rising Black Scientist Award]</small></td><td>Cell Press &mdash; iScience</td></tr>
+  <tr><td class="yr">2024</td><td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10967469/">Sociodemographic Factors &amp; Research Experience Impact MD-PhD Program Acceptance</a></td><td>JCI Insight</td></tr>
+  <tr><td class="yr">2025</td><td><a href="https://www.neurology.org/doi/10.1212/CPJ.0000000000200450">Cerebrovascular Health Among Sex- and Gender-Diverse People</a></td><td>Neurology: Clinical Practice</td></tr>
+  <tr><td class="yr">2024</td><td><a href="https://ieeexplore.ieee.org/document/10817580/">Breast Cancer Detection using Mammography: Image Processing to Deep Learning</a></td><td>IEEE Access</td></tr>
+  <tr><td class="yr">2024</td><td><a href="https://tcr.amegroups.org/article/view/86183/html">Digital Pathology, Deep Learning, and Cancer: A Narrative Review</a></td><td>Translational Cancer Research</td></tr>
+  <tr><td class="yr">2024</td><td><a href="https://www.sciencedirect.com/science/article/pii/S2666521224000395">Exploring the Business Aspects of Digital Pathology &amp; Deep Learning in Cancers</a></td><td>Intelligence-Based Medicine</td></tr>
+  <tr><td class="yr">2024</td><td><a href="https://journals.sagepub.com/doi/10.1177/23821205241264695">Exploring the Usage of ChatGPT Among Medical Students in the United States</a></td><td>J Med Educ Curric Dev</td></tr>
+</table>
+<p class="mono">&rarr; <a href="https://scholar.google.com/citations?user=YP4eTi4AAAAJ&hl=en">full list on google scholar</a></p>
+
+<hr>
+
+<h2 id="press">&sect; 5 &nbsp; Press &amp; features</h2>
+<ul>
+  <li><a href="https://www.cell.com/iscience/fulltext/S2589-0042(25)00036-7">&ldquo;The Sprained Mind&rdquo;</a> &mdash; Cell Press / iScience, Feb 2025. Award-winning essay in the 5th Annual Rising Black Scientists Awards.</li>
+  <li><a href="https://elsevierfoundation.org/winners-of-5th-annual-rising-black-scientists-awards-announced/">5th Annual Rising Black Scientists Awards</a> &mdash; Elsevier Foundation, Feb 2025. Honorable mention alongside Stanford and Morehouse winners.</li>
+  <li><a href="https://montefioreeinstein.org/news/2023/05/01/inaugural-impact-day-showcases-medical-student-research-and-commitment-service">Inaugural Impact Day &mdash; Award Winner</a> &mdash; Montefiore Einstein, May 2023.</li>
+  <li><a href="https://blogs.einsteinmed.edu/blog/2023/08/23/first-year-medical-student-aftershocks/">&ldquo;Aftershocks&rdquo; &mdash; My First Code</a> &mdash; Einstein / Pulse Magazine, Aug 2023. Now in the core curriculum.</li>
+  <li><a href="https://www.watchtheyard.com/leadership-highlight/leadership-highlight-d-k-adrian-williams-the-sga-president-of-wright-state-university/">Leadership Highlight: SGA President</a> &mdash; Watch The Yard, Mar 2021.</li>
+  <li><a href="https://webapp2.wright.edu/web1/newsroom/2021/04/26/governor-dewine-to-address-students-during-wright-state-universitys-spring-commencement-ceremonies/">Commencement Speaker with Gov. DeWine</a> &mdash; Wright State Newsroom, Apr 2021.</li>
+  <li><a href="https://higherlearningadvocates.org/2020/04/15/adrian-williams-wright-state-university/">Leading a Student Body Through a Pandemic</a> &mdash; Higher Learning Advocates, Apr 2020.</li>
+  <li><a href="https://webapp2.wright.edu/web1/newsroom/2019/03/11/wright-state-working-to-retain-and-support-more-underrepresented-students/">Retain the 9: A Retention Initiative</a> &mdash; Wright State Newsroom, Mar 2019.</li>
+</ul>
+
+<hr>
+
+<h2 id="service">&sect; 6 &nbsp; Leadership &amp; service</h2>
+<ul>
+  <li><b>Executive Education Council Member</b> &mdash; Albert Einstein, 2025&ndash;present. Executive advisory council overseeing accreditation, CQI, and educational initiatives.</li>
+  <li><b>MSTP Admissions Committee</b> &mdash; Albert Einstein, 2025&ndash;2027. One of two voting student members on MD-PhD admissions.</li>
+  <li><b>OASC Tutoring Committee</b> &mdash; Albert Einstein, 2025&ndash;present. Coordinating peer tutoring; 9+ students mentored.</li>
+  <li><b>Faculty Senate Senator</b> &mdash; Albert Einstein, 2023&ndash;2024.</li>
+  <li><b>73rd Student Body President</b> &mdash; Wright State University, 2018&ndash;2021. Represented 13,000+ students through a strike and a pandemic; $120K+ budget; testified at the Ohio statehouse.</li>
+  <li><b>North American Representative</b> &mdash; UAEM / WHO, 2018. 71st World Health Assembly, UN Geneva.</li>
+  <li><b>Executive Director</b> &mdash; Ohio Student Government Association, 2018&ndash;2020. Represented 500,000+ students from 14 institutions.</li>
+</ul>
+
+<hr>
+
+<h2 id="work">&sect; 7 &nbsp; Work with me</h2>
+<ul>
+  <li><b>Executive Consulting</b> &mdash; strategic advisory for healthcare executives, AI/health-innovation leaders, and biotech orgs.</li>
+  <li><b>Academic Tutoring</b> &mdash; research methodology, college prep, STEM, and medical-school admissions; 9+ students mentored.</li>
+  <li><b>Curriculum Development</b> &mdash; coursework built for North Central University, Iona College, and the University of Minnesota.</li>
+  <li><b>Speaking &amp; Keynotes</b> &mdash; health innovation, advocacy, AI in medicine, and the physician-scientist journey.</li>
+</ul>
+<p class="mono">inquiries &rarr; <a href="mailto:connectdkaw@gmail.com">connectdkaw@gmail.com</a></p>
+
+<hr>
+
+<h2 id="contact">&sect; 8 &nbsp; Contact</h2>
+<p>
+Open to research collaborations, executive consulting, academic tutoring,
+curriculum development, speaking, and conversations on the future of
+computational neuroscience and health innovation.
+</p>
+<ul>
+  <li>email: <a href="mailto:connectdkaw@gmail.com">connectdkaw@gmail.com</a></li>
+  <li>linkedin: <a href="https://www.linkedin.com/in/dkawjr">linkedin.com/in/dkawjr</a></li>
+  <li>x / twitter: <a href="https://x.com/dkawjr">x.com/dkawjr</a></li>
+  <li>scholar: <a href="https://scholar.google.com/citations?user=YP4eTi4AAAAJ&hl=en">google scholar profile</a></li>
+</ul>
+
+<hr>
 
 <footer>
-  <div class="shell">
-    <div class="foot-grid">
-      <span>© 2026 D.K. Adrian Williams Jr.</span>
-      <span>Bronx · New York</span>
-      <span>Built with <b>♦</b> · Man of <b>KAΨ</b></span>
-    </div>
-  </div>
+  <p class="mono">
+  &copy; 2026 D. K. Adrian Williams Jr. &middot; Bronx, NY &middot; Man of KA&Psi;<br>
+  <a href="#top">&uarr; back to top</a>
+  </p>
 </footer>
 
-<script>
-// Scroll reveal
-const io = new IntersectionObserver((es) => {
-  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
-}, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
-document.querySelectorAll('.rv').forEach(el => io.observe(el));
-
-// Smooth in-page scroll
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', function (e) {
-    const t = document.querySelector(this.getAttribute('href'));
-    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-  });
-});
-</script>
 </body>
 </html>

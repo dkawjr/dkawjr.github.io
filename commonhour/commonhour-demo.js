@@ -60,12 +60,35 @@
     </div>`;
 
   const rulebookTemplate = `
-    <aside class="role-context"><span class="role-label">Live Rulebook</span><h3>Write the rule the way your program means it.</h3><p>Build a structured rule, test it against the same draft, and add it to the active Rulebook. Hard failures immediately lock approval.</p><ul class="role-list"><li>Choose origin and severity</li><li>Test against visible assignments</li><li>Edit the schedule to make it pass</li></ul></aside>
-    <div class="role-screen">
-      <div class="screen-top"><div><h3>Rulebook v3.4 · sandbox</h3><p>Changes stay in this browser demo and reset on reload.</p></div><span class="status" id="rulebookStatus">3 pass · 2 review</span></div>
-      <div class="rule-workbench">
-        <div class="rule-builder-card"><div class="card-head"><strong>Build a program rule</strong><span>Structured fields let the demo test the rule, not merely save text.</span></div><form class="rule-builder-body" id="ruleBuilderForm"><div class="rule-builder-grid"><div class="field"><label for="ruleSubject">When</label><select id="ruleSubject"><option value="pgy1">a PGY-1</option><option value="pgy3">a PGY-3</option><option value="any">any resident</option></select></div><div class="field"><label for="ruleTrigger">Does this</label><select id="ruleTrigger"><option value="icu-night">works an overnight ICU shift</option><option value="call">finishes 24-hour call</option><option value="didactics">has protected didactics</option><option value="time-off">has approved time away</option></select></div><div class="field"><label for="ruleRequirement">Require</label><select id="ruleRequirement"><option value="senior">a qualified senior at the same site</option><option value="recovery">the next day protected for recovery</option><option value="no-night">no night shift inside the recovery window</option><option value="off">the resident stays off the published schedule</option></select></div><div class="field"><label for="ruleSeverity">Severity</label><select id="ruleSeverity"><option value="hard">Hard stop</option><option value="review">Review flag</option><option value="fair">Fairness signal</option></select></div><div class="field"><label for="ruleOrigin">Origin</label><select id="ruleOrigin"><option value="program">Program</option><option value="institution">Institution</option><option value="specialty">Specialty</option><option value="acgme">ACGME</option></select></div><div class="field"><label for="ruleQualifier">Local scope · optional</label><input id="ruleQualifier" type="text" placeholder="e.g. during the ICU block"></div></div><div class="rule-preview"><span>Live rule sentence</span><strong id="rulePreview"></strong></div><div class="rule-test-result" id="ruleTestResult" role="status"></div><div class="action-row" style="margin-top:12px"><button class="mini-button ghost" id="testRuleBtn" type="button">Test on current draft</button><button class="mini-button" id="addRuleBtn" type="button">Add to Rulebook</button></div></form></div>
-        <div class="rule-list-card"><div class="card-head"><strong>Active rules</strong><span id="ruleListSummary">5 configured rules</span></div><div class="rule-list" id="ruleList"></div></div>
+    <div class="role-screen rulebook-screen">
+      <div class="screen-top"><div><h3>Try your program's rule</h3><p>Change any blue phrase. The same draft is checked again immediately.</p></div><span class="status" id="rulebookStatus">3 pass &middot; 0 stop &middot; 2 review</span></div>
+      <div class="rulebook-stage">
+        <div class="rulebook-stage-grid">
+          <div class="rule-lab-main">
+            <div class="rule-lab-bar"><strong>Your program's Rulebook</strong><span>Version 3.4 &middot; live sandbox</span></div>
+            <form class="rule-builder-body" id="ruleBuilderForm">
+              <div class="rule-composer">
+                <div class="rule-composer-label">One rule, written the way your program says it</div>
+                <div class="rule-sentence-editor">If <select class="rule-token subject" id="ruleSubject" aria-label="Rule subject"><option value="pgy1">a PGY-1</option><option value="pgy3">a PGY-3</option><option value="any">any resident</option></select> <select class="rule-token trigger" id="ruleTrigger" aria-label="Rule condition"><option value="icu-night">works overnight ICU</option><option value="call">finishes 24-hour call</option><option value="didactics">attends protected didactics</option><option value="time-off">has approved time away</option></select>, then require <select class="rule-token requirement" id="ruleRequirement" aria-label="Rule requirement"><option value="senior">a qualified senior</option><option value="recovery">the next day protected</option><option value="no-night">no night assignment</option><option value="off">the resident stays off</option></select> <select class="rule-token scope" id="ruleScope" aria-label="Rule scope"><option value="same-site">at the same site</option><option value="recovery">for recovery</option><option value="window">inside the recovery window</option><option value="published">on the published schedule</option></select>.</div>
+              </div>
+              <div class="rule-lab-meta">
+                <div class="rule-meta-cell"><label for="ruleSeverity">Severity</label><select id="ruleSeverity"><option value="hard">Hard stop</option><option value="review">Review flag</option><option value="fair">Fairness signal</option></select></div>
+                <div class="rule-meta-cell"><label for="ruleOrigin">Owner</label><select id="ruleOrigin"><option value="program">Program</option><option value="institution">Institution</option><option value="specialty">Specialty</option><option value="acgme">ACGME</option></select></div>
+                <div class="rule-meta-cell"><span>Test schedule</span><strong>Block 3 &middot; Draft 07</strong></div>
+                <div class="rule-meta-cell"><span>Live check</span><strong id="ruleMetaResult">Passes this draft</strong></div>
+              </div>
+            </form>
+          </div>
+          <aside class="rule-lab-result">
+            <span class="rule-verdict" id="ruleVerdictPill">Rule satisfied</span>
+            <h3 id="ruleVerdictTitle">This assignment can explain itself.</h3>
+            <p id="ruleVerdictCopy">The subject, triggering assignment, and required protection are all visible in the current draft.</p>
+            <div class="rule-dependencies" id="ruleDependencies"></div>
+            <div class="rule-test-result pass-result" id="ruleTestResult" role="status">Passes the current draft.</div>
+            <div class="rule-lab-actions"><button class="mini-button ghost" id="testRuleBtn" type="button">Run this check</button><button class="mini-button" id="addRuleBtn" type="button">Add to Rulebook</button></div>
+          </aside>
+        </div>
+        <div class="rule-saved"><div class="rule-saved-head"><strong>Rules currently checking this draft</strong><span id="ruleListSummary">5 configured rules</span></div><div class="rule-list" id="ruleList"></div></div>
       </div>
     </div>`;
 
@@ -74,7 +97,6 @@
   one('#view-pd .role-layout').innerHTML = pdTemplate;
   one('#view-rulebook .role-layout').innerHTML = rulebookTemplate;
 
-  //__TEMPLATES_DONE__
   const makeState = () => ({
     activeView: 'resident',
     priority: 'Important',
@@ -162,17 +184,73 @@
   }
 
   function currentBuilderRule() {
-    const qualifier = one('#ruleQualifier').value.trim();
-    const text = `When ${selectText('#ruleSubject')} ${selectText('#ruleTrigger')}, require ${selectText('#ruleRequirement')}${qualifier ? ` ${qualifier}` : ''}.`;
+    const text = `If ${selectText('#ruleSubject')} ${selectText('#ruleTrigger')}, then require ${selectText('#ruleRequirement')} ${selectText('#ruleScope')}.`;
     return {
       id: `custom-${Date.now()}`,
       subject: one('#ruleSubject').value,
       trigger: one('#ruleTrigger').value,
       requirement: one('#ruleRequirement').value,
+      scope: one('#ruleScope').value,
       severity: one('#ruleSeverity').value,
       origin: one('#ruleOrigin').value,
       text
     };
+  }
+
+  function ruleTestDetails(rule) {
+    const passed = customRulePasses(rule);
+    const mode = passed ? 'pass' : rule.severity === 'hard' ? 'fail' : 'review';
+    const resident = rule.subject === 'pgy1'
+      ? { title: 'Maya Chen · PGY-1', detail: `Thursday · ${state.schedule.mayaThu}` }
+      : rule.subject === 'pgy3'
+        ? { title: 'Noah Patel · PGY-3', detail: `Thursday · ${state.schedule.noahThu}` }
+        : { title: 'Current resident cohort', detail: `Maya: ${state.schedule.mayaThu} · Noah: ${state.schedule.noahThu}` };
+    const trigger = {
+      'icu-night': { title: 'Overnight ICU condition', detail: resident.detail },
+      call: { title: '24-hour call condition', detail: `Ari Morgan · Friday · ${state.schedule.ariFri}` },
+      didactics: { title: 'Protected didactics', detail: 'Wednesday · protected for this cohort' },
+      'time-off': { title: 'Approved time away', detail: state.request ? `${typeLabels[state.request.type]} · ${state.request.date}` : 'No approved request is present in this draft' }
+    }[rule.trigger];
+    const requirement = {
+      senior: { title: 'Qualified senior coverage', detail: state.schedule.noahThu === 'ICU senior night' ? 'Noah Patel · same-site senior is assigned' : 'No same-site senior is assigned' },
+      recovery: { title: 'Following-day protection', detail: `Maya Friday · ${state.schedule.mayaFri}` },
+      'no-night': { title: 'Recovery window', detail: `Maya: ${state.schedule.mayaThu} · Noah: ${state.schedule.noahThu}` },
+      off: { title: 'Published schedule protection', detail: state.approved ? 'Approved version keeps the resident off' : 'The current draft does not yet prove this protection' }
+    }[rule.requirement];
+    return {
+      passed,
+      mode,
+      pill: passed ? 'Rule satisfied' : mode === 'fail' ? 'Hard stop found' : 'Review required',
+      title: passed ? 'This assignment can explain itself.' : mode === 'fail' ? 'This rule would stop the draft.' : 'This rule would flag the draft.',
+      copy: passed
+        ? 'The condition and required protection are both visible in the current schedule.'
+        : mode === 'fail'
+          ? 'The condition is present, but the required protection is missing. The chief cannot send this version.'
+          : 'The condition needs a named human review before the program director can approve this version.',
+      result: passed
+        ? 'Passes Draft 07. Add it to keep checking future edits.'
+        : mode === 'fail'
+          ? 'Hard stop: change the rule or edit the schedule to continue.'
+          : 'Review flag: the program director must acknowledge this condition.',
+      dependencies: [resident, trigger, { ...requirement, failed: !passed }]
+    };
+  }
+
+  function renderRulePreview(announce = false) {
+    const rule = currentBuilderRule();
+    const details = ruleTestDetails(rule);
+    const verdict = one('#ruleVerdictPill');
+    verdict.className = `rule-verdict${details.mode === 'pass' ? '' : ` ${details.mode}`}`;
+    verdict.textContent = details.pill;
+    one('#ruleVerdictTitle').textContent = details.title;
+    one('#ruleVerdictCopy').textContent = details.copy;
+    one('#ruleMetaResult').textContent = details.passed ? 'Passes this draft' : details.mode === 'fail' ? 'Blocks this draft' : 'Needs review';
+    one('#ruleDependencies').innerHTML = details.dependencies.map((item) => `<div class="rule-dependency"><i class="${item.failed ? 'fail' : ''}"></i><div><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.detail)}</span></div></div>`).join('');
+    const result = one('#ruleTestResult');
+    result.className = `rule-test-result ${details.mode === 'pass' ? 'pass-result' : details.mode === 'review' ? 'review-result' : 'fail-result'}`;
+    result.textContent = details.result;
+    if (announce) notify(details.result);
+    return details;
   }
   function setProgress(button, status, mode) {
     button.className = 'demo-step' + (mode ? ` ${mode}` : '');
@@ -299,7 +377,7 @@
     const counts = ruleCounts();
     one('#rulebookStatus').textContent = `${counts.passed} pass · ${counts.hardStops} stop · ${counts.reviewFlags} review`;
     one('#ruleListSummary').textContent = `${counts.checks.length} configured rules`;
-    one('#ruleList').innerHTML = counts.checks.map((rule) => `<div class="rule-entry"><i class="${rule.passed ? '' : 'fail'}"></i><div><strong>${escapeHtml(rule.text)}</strong><span>${escapeHtml(rule.origin)} · ${escapeHtml(rule.severity)} · ${rule.passed ? 'passes current draft' : 'fails current draft'}</span></div>${rule.removable ? `<button type="button" data-remove-rule="${rule.id}">Remove</button>` : '<span></span>'}</div>`).join('');
+    one('#ruleList').innerHTML = counts.checks.map((rule) => `<div class="rule-entry"><i class="${rule.passed ? '' : rule.severity === 'hard' ? 'fail' : 'review'}"></i><div><strong>${escapeHtml(rule.text)}</strong><span>${escapeHtml(rule.origin)} · ${escapeHtml(rule.severity)} · ${rule.passed ? 'passes current draft' : 'fails current draft'}</span></div>${rule.removable ? `<button type="button" data-remove-rule="${rule.id}">Remove</button>` : '<span></span>'}</div>`).join('');
     all('[data-remove-rule]').forEach((button) => button.addEventListener('click', () => {
       state.customRules = state.customRules.filter((rule) => rule.id !== button.dataset.removeRule);
       state.edits += 1;
@@ -307,7 +385,7 @@
       renderAll();
       notify('Custom rule removed. Draft checks updated.');
     }));
-    one('#rulePreview').textContent = currentBuilderRule().text;
+    renderRulePreview();
   }
 
   function renderAll() {
@@ -397,19 +475,12 @@
     switchView('resident');
   });
 
-  all('#ruleBuilderForm select, #ruleBuilderForm input').forEach((input) => input.addEventListener('input', () => {
-    one('#ruleTestResult').className = 'rule-test-result';
-    one('#rulePreview').textContent = currentBuilderRule().text;
+  all('#ruleBuilderForm select').forEach((input) => input.addEventListener('input', () => {
+    renderRulePreview();
   }));
 
   one('#testRuleBtn').addEventListener('click', () => {
-    const rule = currentBuilderRule();
-    const passed = customRulePasses(rule);
-    const result = one('#ruleTestResult');
-    result.className = `rule-test-result ${passed ? 'pass-result' : 'fail-result'}`;
-    result.textContent = passed
-      ? 'Passes the current draft. Add it to keep this check active.'
-      : `${rule.severity === 'hard' ? 'Would block approval.' : 'Would create a visible review item.'} Change the schedule or the rule to see it update.`;
+    renderRulePreview(true);
   });
 
   one('#addRuleBtn').addEventListener('click', () => {
@@ -426,7 +497,7 @@
     one('#residentDemoForm').reset();
     one('#ruleBuilderForm').reset();
     all('[data-priority]').forEach((button) => button.classList.toggle('active', button.dataset.priority === 'Important'));
-    one('#ruleTestResult').className = 'rule-test-result';
+
     renderAll();
     switchView('resident');
     notify('Demo reset to the original private draft.');

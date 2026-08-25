@@ -8,11 +8,11 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Commonhour — A schedule people can live with">
   <meta property="og:description" content="Transparent, specialty-aware residency scheduling. Every rule is visible. A human approves every schedule.">
-  <meta property="og:image" content="https://dkawjr.github.io/commonhour/og.jpg">
+  <meta property="og:image" content="https://dkawjr.github.io/commonhour/og.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Commonhour — A schedule people can live with">
   <meta name="twitter:description" content="Transparent, specialty-aware residency scheduling. Every rule is visible. A human approves every schedule.">
-  <meta name="twitter:image" content="https://dkawjr.github.io/commonhour/og.jpg">
+  <meta name="twitter:image" content="https://dkawjr.github.io/commonhour/og.png">
   <style>
     :root {
       --canvas: #f5f5f1;
@@ -222,6 +222,16 @@
     .status { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; padding: 8px 10px; background: var(--blue-soft); color: var(--blue-dark); font-size: 9px; font-weight: 700; }
 
     .resident-screen { display: grid; grid-template-columns: 1fr .82fr; gap: 16px; }
+    .leave-strip { grid-column: 1 / -1; display: grid; grid-template-columns: 1.15fr 1fr 1fr; overflow: hidden; border: 1px solid var(--rule); border-radius: 15px; background: #fafaf8; }
+    .leave-strip-head, .leave-strip-account { min-height: 72px; padding: 14px 16px; }
+    .leave-strip-head { display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--rule); }
+    .leave-strip-head strong { font-size: 11px; }
+    .leave-strip-head span { display: block; margin-top: 5px; color: var(--muted); font-family: var(--mono); font-size: 7px; text-transform: uppercase; }
+    .leave-strip-account { border-right: 1px solid var(--rule); }
+    .leave-strip-account:last-child { border-right: 0; }
+    .leave-strip-account span { display: block; color: var(--graphite); font-size: 8px; font-weight: 650; }
+    .leave-strip-account strong { display: block; margin-top: 6px; font-size: 20px; letter-spacing: -.04em; }
+    .leave-strip-account small { display: block; margin-top: 3px; color: var(--muted); font-size: 7px; line-height: 1.4; }
     .request-card, .calendar-card, .schedule-card, .review-card { border: 1px solid var(--rule); border-radius: 15px; overflow: hidden; }
     .card-head { padding: 15px 17px; border-bottom: 1px solid var(--rule); }
     .card-head strong { display: block; font-size: 12px; }
@@ -229,7 +239,7 @@
     .request-body { padding: 17px; }
     .field { margin-bottom: 15px; }
     .field label { display: block; margin-bottom: 7px; color: var(--graphite); font-size: 9px; font-weight: 650; }
-    .field input { width: 100%; height: 42px; border: 1px solid #cfd0ca; border-radius: 9px; padding: 0 11px; background: var(--paper); }
+    .field input, .field select { width: 100%; height: 42px; border: 1px solid #cfd0ca; border-radius: 9px; padding: 0 11px; background: var(--paper); color: var(--ink); }
     .priorities { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
     .priority { min-height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--rule); border-radius: 9px; color: var(--graphite); font-size: 9px; }
     .priority.active { border-color: var(--blue); background: var(--blue-soft); color: var(--blue-dark); font-weight: 700; }
@@ -275,6 +285,78 @@
     .diff span { display: block; margin-top: 3px; color: var(--graphite); font-size: 8px; line-height: 1.4; }
     .pass { border-radius: 999px; padding: 6px 8px; background: var(--mint); color: var(--mint-ink); font-size: 8px; font-weight: 700; }
 
+    .view-shell button:disabled { cursor: not-allowed; opacity: .42; }
+    .demo-console { border-bottom: 1px solid #2b2c31; padding: 18px; background: var(--ink); color: var(--paper); }
+    .demo-console-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 14px; }
+    .demo-console-top span { color: #8bb7fb; font-family: var(--mono); font-size: 8px; letter-spacing: .09em; text-transform: uppercase; }
+    .demo-console-top strong { display: block; margin-top: 5px; font-size: 13px; }
+    .reset-demo { min-height: 34px; border: 1px solid #45464c; border-radius: 999px; padding: 0 12px; background: transparent; color: #c8cad0; font-size: 9px; font-weight: 700; cursor: pointer; }
+    .demo-progress { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid #36373d; border-radius: 13px; overflow: hidden; }
+    .demo-step { position: relative; min-height: 60px; border: 0; border-right: 1px solid #36373d; padding: 12px 13px 12px 30px; background: transparent; color: #878a91; text-align: left; cursor: pointer; }
+    .demo-step:last-child { border-right: 0; }
+    .demo-step::before { content: ""; position: absolute; top: 17px; left: 13px; width: 7px; height: 7px; border: 1px solid #676a71; border-radius: 50%; }
+    .demo-step.done { color: var(--paper); }
+    .demo-step.done::before { border-color: #67c28d; background: #67c28d; }
+    .demo-step.active { background: #171e2b; color: var(--paper); }
+    .demo-step.active::before { border-color: #75a9fa; background: #75a9fa; box-shadow: 0 0 0 3px rgba(117,169,250,.13); }
+    .demo-step.blocked::before { border-color: #d89916; background: #d89916; }
+    .demo-step span { display: block; font-family: var(--mono); font-size: 7px; text-transform: uppercase; }
+    .demo-step strong { display: block; margin-top: 5px; font-size: 9px; font-weight: 650; }
+    .view-tab { display: inline-flex; align-items: center; gap: 8px; }
+    .view-tab .tab-state { width: 6px; height: 6px; border-radius: 50%; background: #c1c2bd; }
+    .view-tab[aria-selected="true"] .tab-state { background: #86b5ff; }
+    .view-tab.has-update .tab-state { background: #38a66b; }
+    .mini-button.ghost { border: 1px solid var(--line-dark); background: var(--paper); color: var(--ink); }
+    .mini-button.warn { background: var(--amber); color: var(--amber-ink); }
+    .action-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    button.priority { background: var(--paper); cursor: pointer; }
+    .field textarea { width: 100%; min-height: 66px; border: 1px solid #cfd0ca; border-radius: 9px; padding: 10px 11px; background: var(--paper); color: var(--ink); resize: vertical; }
+    .request-state { margin-top: 13px; border-top: 1px solid var(--rule); padding-top: 13px; }
+    .request-empty { color: var(--muted); font-size: 9px; line-height: 1.5; }
+    .request-receipt { border-left: 2px solid var(--blue); padding: 10px 11px; background: #f7f9fd; }
+    .request-receipt strong { display: block; font-size: 10px; }
+    .request-receipt span { display: block; margin-top: 4px; color: var(--graphite); font-size: 8px; line-height: 1.45; }
+    .request-receipt button { margin-top: 9px; border: 0; padding: 0; background: transparent; color: var(--blue); font-size: 8px; font-weight: 700; cursor: pointer; }
+    .schedule-release { padding: 12px 16px; border-bottom: 1px solid var(--rule); background: #fafaf8; }
+    .schedule-release strong { display: block; font-size: 10px; }
+    .schedule-release span { display: block; margin-top: 4px; color: var(--muted); font-size: 8px; line-height: 1.4; }
+    button.connect { cursor: pointer; }
+    button.connect:not(.connected) { background: var(--blue-soft); color: var(--blue-dark); }
+    .sched-cell { min-height: 48px; border: 0; border-right: 1px solid var(--rule); padding: 4px; background: var(--paper); color: var(--ink); font-size: 9px; cursor: pointer; }
+    .sched-cell:hover, .sched-cell.selected { position: relative; z-index: 1; outline: 2px solid var(--blue); outline-offset: -2px; }
+    .sched-cell.night { background: #edf2fb; color: #23365f; }
+    .sched-cell.off { background: #fafaf8; color: var(--muted); }
+    .sched-cell.call { background: var(--amber); color: var(--amber-ink); }
+    .editor-card .editor-body { padding: 14px; }
+    .editor-card .editor-body > p { color: var(--graphite); font-size: 8px; line-height: 1.5; }
+    .assignment-options { display: grid; gap: 7px; margin-top: 12px; }
+    .option-button { min-height: 34px; border: 1px solid var(--rule); border-radius: 9px; padding: 0 10px; background: var(--paper); color: var(--graphite); font-size: 9px; text-align: left; cursor: pointer; }
+    .option-button.active { border-color: var(--blue); background: var(--blue-soft); color: var(--blue-dark); font-weight: 700; }
+    .rule-effect { margin-top: 12px; border-top: 1px solid var(--rule); padding-top: 11px; color: var(--graphite); font-size: 8px; line-height: 1.45; }
+    .return-note { display: none; margin-bottom: 14px; padding: 12px 14px; border-left: 2px solid #d89916; background: #fff9e9; color: var(--amber-ink); font-size: 9px; line-height: 1.5; }
+    .pd-actions { display: grid; grid-template-columns: 1fr auto; gap: 9px; margin-top: 14px; }
+    .pd-actions input { min-height: 38px; border: 1px solid var(--line-dark); border-radius: 9px; padding: 0 10px; }
+    .approval-lock { margin-top: 10px; color: var(--muted); font-size: 8px; line-height: 1.45; }
+    .rule-workbench { display: grid; grid-template-columns: 1.08fr .92fr; gap: 15px; }
+    .rule-builder-card, .rule-list-card { border: 1px solid var(--rule); border-radius: 15px; overflow: hidden; }
+    .rule-builder-body { padding: 17px; }
+    .rule-builder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+    .rule-builder-grid .field { margin: 0; }
+    .rule-builder-grid .field.full { grid-column: 1 / -1; }
+    .rule-preview { margin-top: 15px; border: 1px solid #b9d1f4; border-radius: 12px; padding: 14px; background: var(--blue-soft); color: var(--blue-dark); font-size: 12px; line-height: 1.6; }
+    .rule-preview span { display: block; margin-bottom: 7px; font-family: var(--mono); font-size: 7px; letter-spacing: .08em; text-transform: uppercase; }
+    .rule-test-result { display: none; margin-top: 10px; border-radius: 10px; padding: 11px; font-size: 9px; font-weight: 650; line-height: 1.45; }
+    .rule-test-result.pass-result { display: block; background: var(--mint); color: var(--mint-ink); }
+    .rule-test-result.fail-result { display: block; background: var(--rose); color: var(--rose-ink); }
+    .rule-list { padding: 6px 15px; }
+    .rule-entry { display: grid; grid-template-columns: 8px 1fr auto; gap: 10px; padding: 13px 0; border-bottom: 1px solid var(--rule); }
+    .rule-entry:last-child { border-bottom: 0; }
+    .rule-entry i { width: 7px; height: 7px; margin-top: 3px; border-radius: 50%; background: #35a269; }
+    .rule-entry i.fail { background: #cc4c43; }
+    .rule-entry strong { display: block; font-size: 9px; line-height: 1.45; }
+    .rule-entry span { display: block; margin-top: 4px; color: var(--muted); font-family: var(--mono); font-size: 7px; text-transform: uppercase; }
+    .rule-entry button { border: 0; padding: 0; background: transparent; color: var(--blue); font-size: 8px; font-weight: 700; cursor: pointer; }
+
     .blackbox-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 72px; align-items: start; }
     .blackbox-copy h2 { font-size: clamp(43px, 5vw, 67px); }
     .receipt { border-top: 1px solid #37383d; }
@@ -307,6 +389,10 @@
       .role-context { border-right: 0; border-bottom: 1px solid var(--rule); }
       .role-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 17px; }
       .role-list li { border: 1px solid var(--rule); border-radius: 9px; padding: 9px; }
+      .demo-progress { grid-template-columns: 1fr 1fr; }
+      .demo-step:nth-child(2) { border-right: 0; }
+      .demo-step:nth-child(-n+2) { border-bottom: 1px solid #36373d; }
+      .rule-workbench { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 680px) {
@@ -329,9 +415,19 @@
       .role-context { padding: 23px 20px; }
       .role-list { grid-template-columns: 1fr; }
       .role-screen { padding: 19px; }
+      .demo-console { padding: 14px; }
+      .demo-console-top { display: block; }
+      .reset-demo { margin-top: 11px; }
+      .demo-progress { grid-template-columns: 1fr; }
+      .demo-step, .demo-step:nth-child(2) { border-right: 0; border-bottom: 1px solid #36373d; }
+      .demo-step:last-child { border-bottom: 0; }
+      .rule-builder-grid, .pd-actions { grid-template-columns: 1fr; }
+      .rule-builder-grid .field.full { grid-column: auto; }
       .screen-top { display: block; }
       .screen-top .status { margin-top: 10px; }
       .resident-screen, .chief-grid { grid-template-columns: 1fr; }
+      .leave-strip { grid-template-columns: 1fr 1fr; }
+      .leave-strip-head { grid-column: 1 / -1; min-height: 58px; border-right: 0; border-bottom: 1px solid var(--rule); }
       .metric-line { grid-template-columns: 1fr 1fr; }
       .metric:nth-child(2) { border-right: 0; }
       .metric:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
@@ -433,10 +529,20 @@
       <div class="shell">
         <div class="views-intro"><div><p class="eyebrow">What would I see?</p><h2>Choose your role.</h2></div><p>Each person sees only the decisions they need to make—not the entire machinery behind the schedule.</p></div>
         <div class="view-shell">
-          <div class="view-tabs" role="tablist" aria-label="Choose a Commonhour role">
+          <div class="demo-console" aria-label="Live Commonhour workflow">
+            <div class="demo-console-top"><div><span>Connected product sandbox</span><strong id="demoHeadline">Start as a resident, then follow the same schedule through review.</strong></div><button class="reset-demo" id="resetDemo" type="button">Reset demo</button></div>
+            <div class="demo-progress">
+              <button class="demo-step active" type="button" data-jump-view="resident"><span>Resident request</span><strong id="progressRequest">Not submitted</strong></button>
+              <button class="demo-step" type="button" data-jump-view="rulebook"><span>Rulebook</span><strong id="progressRulebook">3 rules pass · 2 review</strong></button>
+              <button class="demo-step" type="button" data-jump-view="chief"><span>Chief draft</span><strong id="progressDraft">Private draft</strong></button>
+              <button class="demo-step" type="button" data-jump-view="pd"><span>PD approval</span><strong id="progressApproval">Not sent</strong></button>
+            </div>
+          </div>
+          <div class="view-tabs" role="tablist" aria-label="Choose a Commonhour perspective">
             <button class="view-tab" type="button" role="tab" aria-selected="true" data-view="resident">I am a resident</button>
             <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="chief">I am a chief resident</button>
             <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="pd">I am a program director</button>
+            <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="rulebook">Configure the Rulebook</button>
           </div>
 
           <section class="view-panel active" id="view-resident" role="tabpanel">
@@ -445,7 +551,8 @@
               <div class="role-screen">
                 <div class="screen-top"><div><h3>Your next request round</h3><p>Requests close August 6 at 5:00 PM</p></div><span class="status">2 priorities remaining</span></div>
                 <div class="resident-screen">
-                  <div class="request-card"><div class="card-head"><strong>Request time away</strong><span>Only the schedule maker and PD see private notes.</span></div><div class="request-body"><div class="field"><label>Date or range</label><input type="text" value="Sep 19–20" aria-label="Resident requested date or range"></div><div class="field"><label>How important is this?</label><div class="priorities"><span class="priority">Must have</span><span class="priority active">Important</span><span class="priority">Nice to have</span></div></div><button class="mini-button" type="button" data-demo-action="Request received. You can edit it until the deadline.">Send request</button></div></div>
+                  <div class="leave-strip" aria-label="Time away balance"><div class="leave-strip-head"><strong>2026–27 time away</strong><span>Updated Aug 25</span></div><div class="leave-strip-account"><span>Vacation</span><strong>13 days</strong><small>20 granted · 5 approved · 2 pending</small></div><div class="leave-strip-account"><span>Sick leave</span><strong>6 days</strong><small>6 granted · no recorded use</small></div></div>
+                  <div class="request-card"><div class="card-head"><strong>Request time away</strong><span>Only the schedule maker and PD see private notes.</span></div><div class="request-body"><div class="field"><label for="shareRequestType">Request type</label><select id="shareRequestType"><option>Vacation</option><option>Sick leave / call-out</option><option>Schedule preference · no leave used</option></select></div><div class="field"><label>Date or range</label><input type="text" value="Sep 19–20" aria-label="Resident requested date or range"></div><div class="field"><label>How important is this?</label><div class="priorities"><span class="priority">Must have</span><span class="priority active">Important</span><span class="priority">Nice to have</span></div></div><button class="mini-button" type="button" data-demo-action="Vacation request received. You can edit it until the deadline.">Send request</button></div></div>
                   <div class="calendar-card"><div class="card-head"><strong>Approved schedule</strong><span>Drafts never appear here.</span></div><div class="calendar-list"><div class="calendar-item"><div><strong>Apple Calendar</strong><span>Private subscription</span></div><span class="connect">Connected</span></div><div class="calendar-item"><div><strong>Google Calendar</strong><span>One-click connection</span></div><span class="connect">Connect</span></div><div class="calendar-item"><div><strong>Outlook</strong><span>Microsoft connection</span></div><span class="connect">Connect</span></div></div></div>
                 </div>
               </div>
@@ -474,6 +581,10 @@
                 <div class="review-card"><div class="review-summary"><div><strong>0</strong><span>unresolved hard stops</span></div><div><strong>2</strong><span>review flags acknowledged</span></div><div><strong>3</strong><span>changes since version 06</span></div></div><div class="diff-list"><div class="diff"><span class="diff-kind">Assignment</span><div><strong>Maya Chen · Thursday</strong><span>ICU day → ICU night; senior paired; recovery added.</span></div><span class="pass">Rules pass</span></div><div class="diff"><span class="diff-kind">Coverage</span><div><strong>Noah Patel · Thursday</strong><span>Senior ICU night added to satisfy supervision.</span></div><span class="pass">Rules pass</span></div><div class="diff"><span class="diff-kind">Request</span><div><strong>Leila Brooks · Sunday</strong><span>Important request granted; consult coverage remains complete.</span></div><span class="pass">No penalty</span></div><div class="diff"><span class="diff-kind">Review</span><div><strong>Didactics → ICU night</strong><span>Two-hour transition remains with chief rationale.</span></div><span class="pass" style="background:var(--amber);color:var(--amber-ink)">Acknowledge</span></div></div></div>
               </div>
             </div>
+          </section>
+
+          <section class="view-panel" id="view-rulebook" role="tabpanel">
+            <div class="role-layout"></div>
           </section>
         </div>
       </div>
@@ -534,5 +645,7 @@
     }
     qsa('[data-demo-action]').forEach((button) => button.addEventListener('click', () => showToast(button.dataset.demoAction)));
   </script>
+  <script src="commonhour-demo.js"></script>
 </body>
 </html>
+

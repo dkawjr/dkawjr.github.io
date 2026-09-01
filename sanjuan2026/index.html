@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>San Juan 2026 · Settle Up</title>
+<meta name="description" content="Puerto Rico 2026 — who owes what, settled up in 7 payments." />
+<meta property="og:title" content="San Juan 2026 · Settle Up" />
+<meta property="og:description" content="Eight of us, one trip, all squared up. Tap your name to see what you send or collect." />
+<meta property="og:type" content="website" />
+<meta name="theme-color" content="#0a1424" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0a1424; --bg2:#0f1d33; --card:#13233d; --card-hi:#182b49;
+    --gold:#f2b04a; --teal:#33d6a6; --coral:#ff7d5e;
+    --text:#eaf0f8; --muted:#93a4bd;
+    --hair:rgba(255,255,255,.08); --hair-2:rgba(255,255,255,.05);
+    --shadow:0 24px 60px -28px rgba(0,0,0,.75);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:"DM Sans",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.5;
+    min-height:100vh; position:relative; overflow-x:hidden;
+  }
+  body::before{
+    content:""; position:fixed; top:-160px; left:50%;
+    width:520px; height:520px; transform:translateX(-50%);
+    background:radial-gradient(circle at center,
+      rgba(242,176,74,.20) 0%, rgba(255,125,94,.10) 38%, rgba(255,125,94,0) 70%);
+    pointer-events:none; z-index:0;
+  }
+  body::after{
+    content:""; position:fixed; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events:none; mix-blend-mode:overlay; z-index:0;
+  }
+  .wrap{ position:relative; z-index:1; max-width:560px; margin:0 auto;
+    padding:clamp(20px,5vw,40px) clamp(16px,4.5vw,28px) 64px; }
+
+  header{ text-align:center; padding-top:14px; }
+  .eyebrow{ font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:.24em;
+    text-transform:uppercase; color:var(--gold); opacity:.9; }
+  h1{ font-family:"Fraunces",serif; font-weight:900; font-size:clamp(40px,12vw,60px);
+    line-height:.96; letter-spacing:-.015em; margin:.28em 0 .12em; }
+  .horizon{ height:2px; width:min(240px,70%); margin:14px auto 0;
+    background:linear-gradient(90deg, rgba(242,176,74,0) 0%, var(--gold) 28%, var(--coral) 62%, rgba(255,125,94,0) 100%);
+    border-radius:2px; }
+  .lede{ color:var(--muted); font-size:15px; max-width:34ch; margin:16px auto 0; }
+
+  .intro-card{ background:linear-gradient(180deg,var(--card-hi),var(--card)); border:1px solid var(--hair);
+    border-radius:18px; padding:20px 22px; margin:30px 0 2px; }
+  .intro-card h3{ margin:0 0 9px; font-family:"Fraunces",serif; font-weight:600; font-size:17px;
+    color:var(--gold); letter-spacing:-.01em; }
+  .intro-card p{ margin:0; font-size:14px; line-height:1.66; color:#cdd8e8; }
+  .intro-card p b{ color:var(--text); font-weight:700; }
+
+  .sec-title{ display:flex; align-items:center; gap:12px; margin:36px 2px 14px; }
+  .sec-title h2{ font-family:"DM Sans",sans-serif; font-weight:700; font-size:13px;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin:0; white-space:nowrap; }
+  .sec-title .rule{ height:1px; flex:1; background:var(--hair); }
+
+  .roster{ display:flex; flex-direction:column; gap:8px; }
+  .person-row{ display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px;
+    width:100%; text-align:left; background:var(--card); border:1px solid var(--hair);
+    border-radius:16px; padding:14px 16px; color:var(--text); cursor:pointer; font:inherit;
+    transition:transform .18s ease, background .18s ease, border-color .18s ease; }
+  .person-row:hover,.person-row:focus-visible{ background:var(--card-hi);
+    border-color:rgba(255,255,255,.16); transform:translateY(-2px); outline:none; }
+  .person-row:focus-visible{ box-shadow:0 0 0 2px var(--gold); }
+
+  .avatar{ width:44px; height:44px; border-radius:50%; display:grid; place-items:center;
+    font-family:"Fraunces",serif; font-weight:600; font-size:19px; background:var(--bg2);
+    border:2px solid var(--hair); flex-shrink:0; }
+  .avatar.pos{ border-color:rgba(51,214,166,.55); color:#bff2e0; }
+  .avatar.neg{ border-color:rgba(255,125,94,.55); color:#ffd0c2; }
+  .avatar.sm{ width:32px; height:32px; font-size:14px; border-width:1.5px; }
+
+  .who{ min-width:0; }
+  .who .name{ font-weight:700; font-size:16.5px; letter-spacing:-.01em; }
+  .who .role{ font-size:12.5px; color:var(--muted); margin-top:1px; }
+  .bar{ height:4px; border-radius:3px; margin-top:7px; background:var(--hair-2); overflow:hidden; }
+  .bar > i{ display:block; height:100%; border-radius:3px; }
+  .bar.pos > i{ background:var(--teal); }
+  .bar.neg > i{ background:var(--coral); }
+
+  .amt-tag{ font-family:"JetBrains Mono",monospace; font-weight:700; font-size:15.5px;
+    white-space:nowrap; text-align:right; }
+  .amt-tag.pos{ color:var(--teal); }
+  .amt-tag.neg{ color:var(--coral); }
+  .amt-tag small{ display:block; font-size:10px; font-weight:500; letter-spacing:.12em;
+    color:var(--muted); text-transform:uppercase; }
+  .amt-tag .chev{ display:inline-block; margin-left:2px; color:var(--muted); font-family:"DM Sans",sans-serif; }
+
+  .detail{ display:none; }
+  .detail.show{ display:block; animation:rise .32s cubic-bezier(.16,1,.3,1); }
+  @keyframes rise{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;} }
+
+  .back{ display:inline-flex; align-items:center; gap:8px; background:none; border:none;
+    color:var(--muted); font:inherit; font-weight:500; font-size:14px; cursor:pointer;
+    padding:8px 4px; margin-bottom:6px; border-radius:8px; }
+  .back:hover,.back:focus-visible{ color:var(--text); outline:none; }
+  .back:focus-visible{ box-shadow:0 0 0 2px var(--gold); }
+
+  .card{ background:linear-gradient(180deg,var(--card-hi),var(--card)); border:1px solid var(--hair);
+    border-radius:24px; padding:26px 22px 24px; box-shadow:var(--shadow); }
+  .card-head{ display:flex; align-items:center; gap:16px; }
+  .card-head .avatar{ width:56px; height:56px; font-size:24px; }
+  .card-head .hi{ font-size:14px; color:var(--muted); }
+  .card-head .hi b{ color:var(--text); font-weight:700; font-size:18px; display:block; letter-spacing:-.01em; }
+
+  .headline{ text-align:center; padding:22px 0 6px; border-bottom:1px dashed var(--hair); margin-bottom:20px; }
+  .headline .status{ font-size:14px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+  .headline .big{ font-family:"Fraunces",serif; font-weight:900; font-size:clamp(48px,15vw,68px);
+    line-height:1; letter-spacing:-.02em; margin-top:6px; font-variant-numeric:tabular-nums; }
+  .headline .big.pos{ color:var(--teal); }
+  .headline .big.neg{ color:var(--coral); }
+  .headline .settled{ color:var(--gold); }
+
+  .list-label{ display:flex; align-items:center; justify-content:space-between; font-size:12px;
+    font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin:2px 2px 12px; }
+  .list-label .sum{ font-family:"JetBrains Mono",monospace; letter-spacing:.02em; text-transform:none; }
+
+  .pay{ display:flex; flex-direction:column; gap:10px; }
+  .pay-row{ display:flex; align-items:center; gap:14px; background:var(--bg2);
+    border:1px solid var(--hair); border-radius:16px; padding:14px 16px; }
+  .pay-row .avatar{ width:40px; height:40px; font-size:17px; border-width:2px; }
+  .pay-row .lead{ flex:1; min-width:0; }
+  .pay-row .lead .n{ font-weight:700; font-size:16px; }
+  .pay-row .lead .d{ font-size:12.5px; color:var(--muted); }
+  .pay-row .val{ font-family:"JetBrains Mono",monospace; font-weight:700; font-size:18px;
+    font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .pay.collect .avatar{ border-color:rgba(51,214,166,.5); color:#bff2e0; }
+  .pay.collect .val{ color:var(--teal); }
+  .pay.send .avatar{ border-color:rgba(255,125,94,.5); color:#ffd0c2; }
+  .pay.send .val{ color:var(--coral); }
+
+  .otherside{ text-align:center; color:var(--muted); font-size:13.5px; margin-top:16px;
+    padding-top:14px; border-top:1px solid var(--hair-2); }
+  .otherside b{ color:var(--text); font-weight:600; }
+
+  /* ---------- explainer ---------- */
+  .explain-toggle{ width:100%; display:flex; align-items:center; justify-content:space-between;
+    gap:10px; margin-top:18px; background:rgba(242,176,74,.08); border:1px solid rgba(242,176,74,.28);
+    border-radius:14px; color:var(--gold); font:inherit; font-weight:700; font-size:14px;
+    padding:14px 16px; cursor:pointer; transition:background .18s ease; letter-spacing:.01em; }
+  .explain-toggle:hover,.explain-toggle:focus-visible{ background:rgba(242,176,74,.14); outline:none; }
+  .explain-toggle:focus-visible{ box-shadow:0 0 0 2px var(--gold); }
+  .lg-caret{ font-family:"DM Sans",sans-serif; color:inherit; opacity:.8;
+    transition:transform .2s ease; display:inline-block; font-size:18px; }
+  .js-toggle.open > .lg-caret{ transform:rotate(90deg); }
+
+  .explain{ display:none; margin-top:12px; padding:18px 16px 16px; background:var(--bg2);
+    border:1px solid var(--hair); border-radius:16px; }
+  .explain.show{ display:block; animation:rise .26s ease; }
+  .explain-note{ margin:0 0 16px; font-size:14px; line-height:1.62; color:#cbd6e6; }
+  .explain-note b{ color:var(--text); }
+
+  .ledger-group{ margin-top:8px; }
+  .ledger-group h4{ margin:0 2px 8px; font-size:11px; font-weight:700; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--muted); }
+  .ledger-row{ display:flex; align-items:center; gap:12px; padding:11px 12px; cursor:pointer;
+    border:1px solid var(--hair-2); border-radius:12px; margin-bottom:7px; background:rgba(255,255,255,.015);
+    transition:background .16s ease; }
+  .ledger-row:hover{ background:rgba(255,255,255,.04); }
+  .ledger-row .lg-name{ flex:1; min-width:0; font-weight:600; font-size:15px; }
+  .lg-sub{ display:block; font-size:11px; font-weight:500; color:var(--muted); margin-top:1px; }
+  .lg-amt{ font-family:"JetBrains Mono",monospace; font-weight:700; font-size:15.5px;
+    font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .lg-amt.neg{ color:var(--coral); }
+  .lg-amt.pos{ color:var(--teal); }
+
+  .ledger-items{ display:none; padding:2px 6px 10px 40px; }
+  .ledger-items.show{ display:block; animation:rise .2s ease; }
+  .item-row{ display:flex; justify-content:space-between; gap:12px; padding:6px 0;
+    font-size:12.5px; color:var(--muted); border-bottom:1px solid var(--hair-2); }
+  .item-row:last-child{ border-bottom:none; }
+  .item-row span:first-child{ min-width:0; }
+  .item-row .iv{ font-family:"JetBrains Mono",monospace; white-space:nowrap; color:#b9c6d8; }
+  .item-row.credit{ color:var(--teal); }
+  .item-row.credit .iv{ color:var(--teal); }
+
+  .ledger-net{ margin-top:12px; padding-top:12px; border-top:1px dashed var(--hair);
+    text-align:center; font-size:14px; color:var(--muted); }
+  .ledger-net b{ font-family:"JetBrains Mono",monospace; font-size:16px; }
+  .ledger-net b.pos{ color:var(--teal); }
+  .ledger-net b.neg{ color:var(--coral); }
+
+  .reroute-recap{ margin-top:14px; text-align:center; }
+  .rr-label{ display:block; font-size:11px; font-weight:700; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:9px; }
+  .rr-chip{ display:inline-block; font-family:"JetBrains Mono",monospace; font-size:12.5px;
+    font-weight:700; padding:6px 11px; border-radius:999px; margin:3px; }
+  .rr-chip.pos{ background:rgba(51,214,166,.12); color:var(--teal); border:1px solid rgba(51,214,166,.3); }
+  .rr-chip.neg{ background:rgba(255,125,94,.12); color:var(--coral); border:1px solid rgba(255,125,94,.3); }
+
+  /* ---------- master list ---------- */
+  .allpay-toggle{ width:100%; display:flex; align-items:center; justify-content:space-between;
+    background:var(--card); border:1px solid var(--hair); border-radius:14px; color:var(--text);
+    font:inherit; font-weight:600; font-size:14px; padding:14px 16px; cursor:pointer; margin-top:10px;
+    transition:background .18s ease; }
+  .allpay-toggle:hover,.allpay-toggle:focus-visible{ background:var(--card-hi); outline:none; }
+  .allpay-toggle:focus-visible{ box-shadow:0 0 0 2px var(--gold); }
+  .allpay-toggle .tw{ color:var(--muted); font-weight:500; font-family:"JetBrains Mono",monospace; font-size:12.5px; }
+  .allpay{ display:none; margin-top:10px; }
+  .allpay.show{ display:block; animation:rise .28s ease; }
+  .allpay .intro{ font-size:12.5px; color:var(--muted); line-height:1.6; padding:2px 4px 12px;
+    border-bottom:1px solid var(--hair-2); margin-bottom:6px; }
+  .flow{ display:flex; align-items:center; gap:10px; padding:12px 4px; border-bottom:1px solid var(--hair-2); font-size:14.5px; }
+  .flow:last-child{ border-bottom:none; }
+  .flow .from{ font-weight:700; color:var(--coral); }
+  .flow .to{ font-weight:700; color:var(--teal); }
+  .flow .mid{ color:var(--muted); font-size:12px; }
+  .flow .fv{ margin-left:auto; font-family:"JetBrains Mono",monospace; font-weight:700; font-variant-numeric:tabular-nums; }
+
+  footer{ margin-top:28px; text-align:center; color:var(--muted); font-size:12.5px; line-height:1.7; }
+  footer .key{ display:inline-flex; gap:16px; justify-content:center; margin-bottom:10px; flex-wrap:wrap; }
+  footer .key span{ display:inline-flex; align-items:center; gap:7px; }
+  footer .dot{ width:9px; height:9px; border-radius:50%; }
+  footer .dot.t{ background:var(--teal); }
+  footer .dot.c{ background:var(--coral); }
+
+  @media (max-width:380px){
+    .person-row{ padding:12px 13px; gap:11px; }
+    .avatar{ width:40px; height:40px; font-size:17px; }
+    .ledger-items{ padding-left:32px; }
+  }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Puerto Rico &middot; Apr&ndash;May 2026</div>
+    <h1>Settle&nbsp;Up</h1>
+    <div class="horizon"></div>
+    <p class="lede">Eight of us, one trip, all squared up.</p>
+  </header>
+
+  <div class="intro-card">
+    <h3>How this works</h3>
+    <p>Here&rsquo;s how we settled up from Puerto Rico. I pulled every shared expense into one pot, worked out who actually owed what, then trimmed it down to the fewest payments possible, 7 instead of 23. Tap your name below to see exactly what you send or collect. Want to know how your number was built? Hit <b>Detailed breakdown</b> on your card to open every expense behind it, line by line. It all reconciles to the cent.</p>
+  </div>
+
+  <section id="overview">
+    <div class="sec-title"><h2>Everyone</h2><span class="rule"></span></div>
+    <div class="roster" id="roster"></div>
+
+    <button class="allpay-toggle" id="allToggle" aria-expanded="false">
+      <span>See all 7 payments</span>
+      <span class="tw" id="allTw">the whole picture</span>
+    </button>
+    <div class="allpay" id="allpay"></div>
+
+    <footer>
+      <div class="key">
+        <span><i class="dot t"></i> Money coming to you</span>
+        <span><i class="dot c"></i> Money you send</span>
+      </div>
+      These 7 transfers clear the entire group, the fewest possible for 8 people.<br/>
+      Open any card and tap <b style="color:var(--gold)">Detailed breakdown</b> to trace every dollar.
+    </footer>
+  </section>
+
+  <section id="detail" class="detail" aria-live="polite">
+    <button class="back" id="back">&larr; Everyone</button>
+    <div class="card" id="card"></div>
+  </section>
+</div>
+
+<script>
+const PEOPLE = [{"name": "Adrian", "net": 397.12, "sends": [], "receives": [{"who": "Jasmine", "amt": 263.16}, {"who": "Nate", "amt": 133.96}], "directOwes": [{"who": "Megan", "amt": 42.67, "gross": 51.42, "items": [{"desc": "Dinner", "amt": 38.97}, {"desc": "Nate bday dec & things", "amt": 12.45}], "credits": [{"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "uber home apr 29", "amt": 2.0}]}, {"who": "Roula", "amt": 21.71, "gross": 76.44, "items": [{"desc": "jibarito (minus saf already paid)", "amt": 41.88}, {"desc": "anas", "amt": 17.47}, {"desc": "alcohol", "amt": 8.37}, {"desc": "uber to jibarito", "amt": 5.48}, {"desc": "uber home from old san juan 4/28", "amt": 3.24}], "credits": [{"desc": "chichirron steak resturant (everyone minus - jas & meg)", "amt": 42.09}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "ubers all over apr 25", "amt": 5.89}]}, {"who": "Chynna", "amt": 15.15, "gross": 71.88, "items": [{"desc": "Sansebar (04/26)", "amt": 42.37}, {"desc": "Marbella beach club last day", "amt": 24.4}, {"desc": "Bday icecream uber", "amt": 1.78}, {"desc": "Uber to jibarito dinner", "amt": 1.7}, {"desc": "Uber to cristabol green", "amt": 1.63}], "credits": [{"desc": "chichirron steak resturant (everyone minus - jas & meg)", "amt": 42.09}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "ubers all over apr 25", "amt": 5.9}, {"desc": "uber home apr 29", "amt": 1.99}]}], "directOwed": [{"who": "Jasmine", "amt": 245.03, "gross": 245.03, "items": [{"desc": "bocca resturant (aw & jas only)", "amt": 87.9}, {"desc": "viator (jet skis a and jas only)", "amt": 80.27}, {"desc": "casita miramar (aw and jas only)", "amt": 70.11}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}], "credits": []}, {"who": "Safyuan", "amt": 116.96, "gross": 129.46, "items": [{"desc": "zajori gastro show (saf & brit only)", "amt": 68.5}, {"desc": "chichirron steak resturant (everyone minus - jas & meg)", "amt": 42.09}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "ubers all over apr 25", "amt": 5.9}, {"desc": "old san juan uber", "amt": 4.22}, {"desc": "uber home apr 29", "amt": 2.0}], "credits": [{"desc": "Bottles/Liquor", "amt": 12.5}]}, {"who": "Nate", "amt": 60.95, "gross": 60.95, "items": [{"desc": "chichirron steak resturant (everyone minus - jas & meg)", "amt": 42.09}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "ubers all over apr 25", "amt": 5.9}, {"desc": "old san juan uber", "amt": 4.21}, {"desc": "uber home apr 29", "amt": 2.0}], "credits": []}, {"who": "Brittney", "amt": 53.71, "gross": 125.24, "items": [{"desc": "zajori gastro show (saf & brit only)", "amt": 68.5}, {"desc": "chichirron steak resturant (everyone minus - jas & meg)", "amt": 42.1}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "ubers all over apr 25", "amt": 5.89}, {"desc": "uber home apr 29", "amt": 2.0}], "credits": [{"desc": "Zajori gastro show", "amt": 56.24}, {"desc": "Last day meal", "amt": 15.29}]}], "sumOwe": 79.53, "sumOwed": 476.65}, {"name": "Roula", "net": 158.01, "sends": [], "receives": [{"who": "Safyuan", "amt": 120.05}, {"who": "Jasmine", "amt": 37.96}], "directOwes": [{"who": "Megan", "amt": 26.35, "gross": 51.43, "items": [{"desc": "Dinner", "amt": 38.97}, {"desc": "Nate bday dec & things", "amt": 12.46}], "credits": [{"desc": "anas", "amt": 14.47}, {"desc": "alcohol", "amt": 8.37}, {"desc": "uber to old san juan", "amt": 2.24}]}], "directOwed": [{"who": "Nate", "amt": 70.4, "gross": 70.4, "items": [{"desc": "jibarito (minus saf already paid)", "amt": 37.38}, {"desc": "anas", "amt": 15.47}, {"desc": "alcohol", "amt": 8.37}, {"desc": "uber home from beach", "amt": 2.8}, {"desc": "uber home from jibarito", "amt": 2.79}, {"desc": "uber to chicharron", "amt": 1.8}, {"desc": "uber home from chicharron", "amt": 1.79}], "credits": []}, {"who": "Jasmine", "amt": 41.88, "gross": 41.88, "items": [{"desc": "jibarito (minus saf already paid)", "amt": 41.88}], "credits": []}, {"who": "Brittney", "amt": 32.62, "gross": 88.86, "items": [{"desc": "jibarito (minus saf already paid)", "amt": 46.38}, {"desc": "anas", "amt": 19.47}, {"desc": "alcohol", "amt": 8.38}, {"desc": "uber home from old san juan 4/28", "amt": 3.23}, {"desc": "uber home from beach", "amt": 2.79}, {"desc": "uber home from jibarito", "amt": 2.79}, {"desc": "uber to old san juan", "amt": 2.23}, {"desc": "uber home from chicharron", "amt": 1.8}, {"desc": "uber to chicharron", "amt": 1.79}], "credits": [{"desc": "Zajori gastro show", "amt": 56.24}]}, {"who": "Adrian", "amt": 21.71, "gross": 76.44, "items": [{"desc": "jibarito (minus saf already paid)", "amt": 41.88}, {"desc": "anas", "amt": 17.47}, {"desc": "alcohol", "amt": 8.37}, {"desc": "uber to jibarito", "amt": 5.48}, {"desc": "uber home from old san juan 4/28", "amt": 3.24}], "credits": [{"desc": "chichirron steak resturant (everyone minus - jas & meg)", "amt": 42.09}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "ubers all over apr 25", "amt": 5.89}]}, {"who": "Safyuan", "amt": 17.75, "gross": 30.25, "items": [{"desc": "anas", "amt": 9.47}, {"desc": "alcohol", "amt": 8.38}, {"desc": "uber home from old san juan 4/28", "amt": 3.24}, {"desc": "uber home from beach", "amt": 2.8}, {"desc": "uber home from jibarito", "amt": 2.78}, {"desc": "uber to chicharron", "amt": 1.79}, {"desc": "uber home from chicharron", "amt": 1.79}], "credits": [{"desc": "Bottles/Liquor", "amt": 12.5}]}], "sumOwe": 26.35, "sumOwed": 184.36}, {"name": "Megan", "net": 187.89, "sends": [], "receives": [{"who": "Nate", "amt": 187.89}], "directOwes": [{"who": "Chynna", "amt": 7.61, "gross": 59.03, "items": [{"desc": "Sansebar (04/26)", "amt": 42.37}, {"desc": "Marbella beach club last day", "amt": 13.26}, {"desc": "Bday icecream uber", "amt": 1.78}, {"desc": "Uber to cristabol green", "amt": 1.62}], "credits": [{"desc": "Dinner", "amt": 38.97}, {"desc": "Nate bday dec & things", "amt": 12.45}]}], "directOwed": [{"who": "Nate", "amt": 51.42, "gross": 51.42, "items": [{"desc": "Dinner", "amt": 38.97}, {"desc": "Nate bday dec & things", "amt": 12.45}], "credits": []}, {"who": "Adrian", "amt": 42.67, "gross": 51.42, "items": [{"desc": "Dinner", "amt": 38.97}, {"desc": "Nate bday dec & things", "amt": 12.45}], "credits": [{"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "uber home apr 29", "amt": 2.0}]}, {"who": "Safyuan", "amt": 38.93, "gross": 51.43, "items": [{"desc": "Dinner", "amt": 38.98}, {"desc": "Nate bday dec & things", "amt": 12.45}], "credits": [{"desc": "Bottles/Liquor", "amt": 12.5}]}, {"who": "Brittney", "amt": 36.13, "gross": 51.42, "items": [{"desc": "Dinner", "amt": 38.97}, {"desc": "Nate bday dec & things", "amt": 12.45}], "credits": [{"desc": "Last day meal", "amt": 15.29}]}, {"who": "Roula", "amt": 26.35, "gross": 51.43, "items": [{"desc": "Dinner", "amt": 38.97}, {"desc": "Nate bday dec & things", "amt": 12.46}], "credits": [{"desc": "anas", "amt": 14.47}, {"desc": "alcohol", "amt": 8.37}, {"desc": "uber to old san juan", "amt": 2.24}]}], "sumOwe": 7.61, "sumOwed": 195.5}, {"name": "Chynna", "net": 114.49, "sends": [], "receives": [{"who": "Safyuan", "amt": 107.3}, {"who": "Brittney", "amt": 7.19}], "directOwes": [], "directOwed": [{"who": "Nate", "amt": 55.05, "gross": 55.05, "items": [{"desc": "Sansebar (04/26)", "amt": 42.37}, {"desc": "Uber to abnb from airport", "amt": 4.25}, {"desc": "Uber to airport home", "amt": 3.32}, {"desc": "Bday icecream uber", "amt": 1.78}, {"desc": "Uber to jibarito dinner", "amt": 1.7}, {"desc": "Uber to cristabol green", "amt": 1.63}], "credits": []}, {"who": "Safyuan", "amt": 34.97, "gross": 47.47, "items": [{"desc": "Sansebar (04/26)", "amt": 42.37}, {"desc": "Bday icecream uber", "amt": 1.77}, {"desc": "Uber to jibarito dinner", "amt": 1.7}, {"desc": "Uber to cristabol green", "amt": 1.63}], "credits": [{"desc": "Bottles/Liquor", "amt": 12.5}]}, {"who": "Adrian", "amt": 15.15, "gross": 71.88, "items": [{"desc": "Sansebar (04/26)", "amt": 42.37}, {"desc": "Marbella beach club last day", "amt": 24.4}, {"desc": "Bday icecream uber", "amt": 1.78}, {"desc": "Uber to jibarito dinner", "amt": 1.7}, {"desc": "Uber to cristabol green", "amt": 1.63}], "credits": [{"desc": "chichirron steak resturant (everyone minus - jas & meg)", "amt": 42.09}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "ubers all over apr 25", "amt": 5.9}, {"desc": "uber home apr 29", "amt": 1.99}]}, {"who": "Megan", "amt": 7.61, "gross": 59.03, "items": [{"desc": "Sansebar (04/26)", "amt": 42.37}, {"desc": "Marbella beach club last day", "amt": 13.26}, {"desc": "Bday icecream uber", "amt": 1.78}, {"desc": "Uber to cristabol green", "amt": 1.62}], "credits": [{"desc": "Dinner", "amt": 38.97}, {"desc": "Nate bday dec & things", "amt": 12.45}]}, {"who": "Jasmine", "amt": 1.71, "gross": 1.71, "items": [{"desc": "Uber to jibarito dinner", "amt": 1.71}], "credits": []}], "sumOwe": 0, "sumOwed": 114.49}, {"name": "Brittney", "net": -7.19, "sends": [{"who": "Chynna", "amt": 7.19}], "receives": [], "directOwes": [{"who": "Adrian", "amt": 53.71, "gross": 125.24, "items": [{"desc": "zajori gastro show (saf & brit only)", "amt": 68.5}, {"desc": "chichirron steak resturant (everyone minus - jas & meg)", "amt": 42.1}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "ubers all over apr 25", "amt": 5.89}, {"desc": "uber home apr 29", "amt": 2.0}], "credits": [{"desc": "Zajori gastro show", "amt": 56.24}, {"desc": "Last day meal", "amt": 15.29}]}, {"who": "Megan", "amt": 36.13, "gross": 51.42, "items": [{"desc": "Dinner", "amt": 38.97}, {"desc": "Nate bday dec & things", "amt": 12.45}], "credits": [{"desc": "Last day meal", "amt": 15.29}]}, {"who": "Roula", "amt": 32.62, "gross": 88.86, "items": [{"desc": "jibarito (minus saf already paid)", "amt": 46.38}, {"desc": "anas", "amt": 19.47}, {"desc": "alcohol", "amt": 8.38}, {"desc": "uber home from old san juan 4/28", "amt": 3.23}, {"desc": "uber home from beach", "amt": 2.79}, {"desc": "uber home from jibarito", "amt": 2.79}, {"desc": "uber to old san juan", "amt": 2.23}, {"desc": "uber home from chicharron", "amt": 1.8}, {"desc": "uber to chicharron", "amt": 1.79}], "credits": [{"desc": "Zajori gastro show", "amt": 56.24}]}], "directOwed": [{"who": "Nate", "amt": 71.53, "gross": 71.53, "items": [{"desc": "Zajori gastro show", "amt": 56.24}, {"desc": "Last day meal", "amt": 15.29}], "credits": []}, {"who": "Safyuan", "amt": 43.74, "gross": 56.24, "items": [{"desc": "Zajori gastro show", "amt": 56.24}], "credits": [{"desc": "Bottles/Liquor", "amt": 12.5}]}], "sumOwe": 122.46, "sumOwed": 115.27}, {"name": "Safyuan", "net": -227.35, "sends": [{"who": "Roula", "amt": 120.05}, {"who": "Chynna", "amt": 107.3}], "receives": [], "directOwes": [{"who": "Adrian", "amt": 116.96, "gross": 129.46, "items": [{"desc": "zajori gastro show (saf & brit only)", "amt": 68.5}, {"desc": "chichirron steak resturant (everyone minus - jas & meg)", "amt": 42.09}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "ubers all over apr 25", "amt": 5.9}, {"desc": "old san juan uber", "amt": 4.22}, {"desc": "uber home apr 29", "amt": 2.0}], "credits": [{"desc": "Bottles/Liquor", "amt": 12.5}]}, {"who": "Brittney", "amt": 43.74, "gross": 56.24, "items": [{"desc": "Zajori gastro show", "amt": 56.24}], "credits": [{"desc": "Bottles/Liquor", "amt": 12.5}]}, {"who": "Megan", "amt": 38.93, "gross": 51.43, "items": [{"desc": "Dinner", "amt": 38.98}, {"desc": "Nate bday dec & things", "amt": 12.45}], "credits": [{"desc": "Bottles/Liquor", "amt": 12.5}]}, {"who": "Chynna", "amt": 34.97, "gross": 47.47, "items": [{"desc": "Sansebar (04/26)", "amt": 42.37}, {"desc": "Bday icecream uber", "amt": 1.77}, {"desc": "Uber to jibarito dinner", "amt": 1.7}, {"desc": "Uber to cristabol green", "amt": 1.63}], "credits": [{"desc": "Bottles/Liquor", "amt": 12.5}]}, {"who": "Roula", "amt": 17.75, "gross": 30.25, "items": [{"desc": "anas", "amt": 9.47}, {"desc": "alcohol", "amt": 8.38}, {"desc": "uber home from old san juan 4/28", "amt": 3.24}, {"desc": "uber home from beach", "amt": 2.8}, {"desc": "uber home from jibarito", "amt": 2.78}, {"desc": "uber to chicharron", "amt": 1.79}, {"desc": "uber home from chicharron", "amt": 1.79}], "credits": [{"desc": "Bottles/Liquor", "amt": 12.5}]}], "directOwed": [{"who": "Nate", "amt": 12.5, "gross": 12.5, "items": [{"desc": "Bottles/Liquor", "amt": 12.5}], "credits": []}, {"who": "Jasmine", "amt": 12.5, "gross": 12.5, "items": [{"desc": "Bottles/Liquor", "amt": 12.5}], "credits": []}], "sumOwe": 252.35, "sumOwed": 25.0}, {"name": "Nate", "net": -321.85, "sends": [{"who": "Megan", "amt": 187.89}, {"who": "Adrian", "amt": 133.96}], "receives": [], "directOwes": [{"who": "Brittney", "amt": 71.53, "gross": 71.53, "items": [{"desc": "Zajori gastro show", "amt": 56.24}, {"desc": "Last day meal", "amt": 15.29}], "credits": []}, {"who": "Roula", "amt": 70.4, "gross": 70.4, "items": [{"desc": "jibarito (minus saf already paid)", "amt": 37.38}, {"desc": "anas", "amt": 15.47}, {"desc": "alcohol", "amt": 8.37}, {"desc": "uber home from beach", "amt": 2.8}, {"desc": "uber home from jibarito", "amt": 2.79}, {"desc": "uber to chicharron", "amt": 1.8}, {"desc": "uber home from chicharron", "amt": 1.79}], "credits": []}, {"who": "Adrian", "amt": 60.95, "gross": 60.95, "items": [{"desc": "chichirron steak resturant (everyone minus - jas & meg)", "amt": 42.09}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}, {"desc": "ubers all over apr 25", "amt": 5.9}, {"desc": "old san juan uber", "amt": 4.21}, {"desc": "uber home apr 29", "amt": 2.0}], "credits": []}, {"who": "Chynna", "amt": 55.05, "gross": 55.05, "items": [{"desc": "Sansebar (04/26)", "amt": 42.37}, {"desc": "Uber to abnb from airport", "amt": 4.25}, {"desc": "Uber to airport home", "amt": 3.32}, {"desc": "Bday icecream uber", "amt": 1.78}, {"desc": "Uber to jibarito dinner", "amt": 1.7}, {"desc": "Uber to cristabol green", "amt": 1.63}], "credits": []}, {"who": "Megan", "amt": 51.42, "gross": 51.42, "items": [{"desc": "Dinner", "amt": 38.97}, {"desc": "Nate bday dec & things", "amt": 12.45}], "credits": []}, {"who": "Safyuan", "amt": 12.5, "gross": 12.5, "items": [{"desc": "Bottles/Liquor", "amt": 12.5}], "credits": []}], "directOwed": [], "sumOwe": 321.85, "sumOwed": 0}, {"name": "Jasmine", "net": -301.12, "sends": [{"who": "Adrian", "amt": 263.16}, {"who": "Roula", "amt": 37.96}], "receives": [], "directOwes": [{"who": "Adrian", "amt": 245.03, "gross": 245.03, "items": [{"desc": "bocca resturant (aw & jas only)", "amt": 87.9}, {"desc": "viator (jet skis a and jas only)", "amt": 80.27}, {"desc": "casita miramar (aw and jas only)", "amt": 70.11}, {"desc": "group liquor (3 bottles plus shooters (cash))", "amt": 6.75}], "credits": []}, {"who": "Roula", "amt": 41.88, "gross": 41.88, "items": [{"desc": "jibarito (minus saf already paid)", "amt": 41.88}], "credits": []}, {"who": "Safyuan", "amt": 12.5, "gross": 12.5, "items": [{"desc": "Bottles/Liquor", "amt": 12.5}], "credits": []}, {"who": "Chynna", "amt": 1.71, "gross": 1.71, "items": [{"desc": "Uber to jibarito dinner", "amt": 1.71}], "credits": []}], "directOwed": [], "sumOwe": 301.12, "sumOwed": 0}];
+
+const byName = Object.fromEntries(PEOPLE.map(p => [p.name, p]));
+const initial = n => n[0].toUpperCase();
+const money = n => "$" + Number(n).toLocaleString("en-US",{minimumFractionDigits:2, maximumFractionDigits:2});
+const maxAbs = Math.max(...PEOPLE.map(p => Math.abs(p.net)));
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const plural = (n,one,many)=> n + " " + (n===1?one:many);
+function nameList(a){
+  if(a.length===0) return "";
+  if(a.length===1) return a[0];
+  if(a.length===2) return a[0]+" and "+a[1];
+  return a.slice(0,-1).join(", ")+", and "+a[a.length-1];
+}
+
+/* ---------- overview ---------- */
+const roster = document.getElementById("roster");
+[...PEOPLE].sort((a,b)=>b.net-a.net).forEach(p=>{
+  const pos = p.net>=0;
+  const btn = document.createElement("button");
+  btn.className="person-row";
+  btn.setAttribute("aria-label",`${p.name}, ${pos?"is owed":"owes"} ${money(Math.abs(p.net))}. Open details.`);
+  btn.innerHTML = `
+    <div class="avatar ${pos?'pos':'neg'}">${initial(p.name)}</div>
+    <div class="who">
+      <div class="name">${p.name}</div>
+      <div class="role">${pos?"is owed":"owes the group"}</div>
+      <div class="bar ${pos?'pos':'neg'}"><i style="width:${Math.max(6,Math.abs(p.net)/maxAbs*100)}%"></i></div>
+    </div>
+    <div class="amt-tag ${pos?'pos':'neg'}">
+      <small>${pos?"gets back":"pays"}</small>
+      ${money(Math.abs(p.net))}<span class="chev">&rsaquo;</span>
+    </div>`;
+  btn.addEventListener("click",()=>openDetail(p.name));
+  roster.appendChild(btn);
+});
+
+/* ---------- master list ---------- */
+const allPayments=[];
+PEOPLE.forEach(p=>p.sends.forEach(s=>allPayments.push({from:p.name,to:s.who,amt:s.amt})));
+allPayments.sort((a,b)=>b.amt-a.amt);
+document.getElementById("allpay").innerHTML =
+  `<div class="intro">These are the 7 simplified transfers. Every debt below still gets paid, just routed to keep the payment count low. Open anyone&rsquo;s card to see how their real debts fold into these.</div>` +
+  allPayments.map(t=>`
+    <div class="flow">
+      <span class="from">${t.from}</span><span class="mid">sends&nbsp;&rarr;</span>
+      <span class="to">${t.to}</span><span class="fv">${money(t.amt)}</span>
+    </div>`).join("");
+
+const allToggle=document.getElementById("allToggle");
+allToggle.addEventListener("click",()=>{
+  const open=document.getElementById("allpay").classList.toggle("show");
+  allToggle.setAttribute("aria-expanded",open?"true":"false");
+  allToggle.querySelector("span").textContent = open?"Hide the payment list":"See all 7 payments";
+  document.getElementById("allTw").textContent = open?"":"the whole picture";
+});
+
+/* ---------- detail ---------- */
+const overview=document.getElementById("overview");
+const detail=document.getElementById("detail");
+const card=document.getElementById("card");
+document.getElementById("back").addEventListener("click",closeDetail);
+
+// one delegated handler survives re-renders
+card.addEventListener("click",e=>{
+  const t=e.target.closest(".js-toggle");
+  if(!t||!card.contains(t))return;
+  const panel=document.getElementById(t.getAttribute("data-controls"));
+  if(!panel)return;
+  const open=panel.classList.toggle("show");
+  t.classList.toggle("open",open);
+});
+
+function narrativeFor(p,pos){
+  const owe=p.directOwes, owed=p.directOwed, simp = pos?p.receives:p.sends;
+  const simpNames=nameList(simp.map(x=>x.who));
+  if(!pos){
+    let s=`You actually owe ${plural(owe.length,'person','people')}, listed below, ${money(p.sumOwe)} all in.`;
+    if(owed.length) s+=` ${nameList(owed.map(x=>x.who))} owe you ${money(p.sumOwed)} back, which knocks against it.`;
+    s+=` Rather than settle each one, the group nets everybody out and folds your share into just ${plural(simp.length,'payment','payments')}: <b>${simpNames}</b>. Every dollar still lands with someone the group owes.`;
+    return s;
+  }
+  let s=`${plural(owed.length,'person','people')} owe you, listed below, ${money(p.sumOwed)} all in.`;
+  if(owe.length) s+=` You also owe ${nameList(owe.map(x=>x.who))} ${money(p.sumOwe)}, which cancels straight out of what you collect.`;
+  s+=` So instead of chasing everyone${owe.length?" and repaying those":""}, you simply collect from ${plural(simp.length,'person','people')}: <b>${simpNames}</b>. Same total, far fewer transfers.`;
+  return s;
+}
+
+function ledgerRow(entry,dir){
+  const id="led-"+dir+"-"+entry.who;
+  const items=entry.items.map(it=>`<div class="item-row"><span>${it.desc}</span><span class="iv">${money(it.amt)}</span></div>`).join("");
+  const credits=entry.credits.map(c=>`<div class="item-row credit"><span>${c.desc} &middot; you paid, credited back</span><span class="iv">&minus;${money(c.amt)}</span></div>`).join("");
+  const sub = entry.credits.length ? `<span class="lg-sub">${money(entry.gross)} charged, ${money(entry.gross-entry.amt)} credited</span>` : "";
+  return `
+    <div class="ledger-row js-toggle" data-controls="${id}" role="button" tabindex="0">
+      <div class="avatar sm ${dir==='owe'?'neg':'pos'}">${initial(entry.who)}</div>
+      <div class="lg-name">${entry.who}${sub}</div>
+      <div class="lg-amt ${dir==='owe'?'neg':'pos'}">${money(entry.amt)}</div>
+      <span class="lg-caret">&rsaquo;</span>
+    </div>
+    <div class="ledger-items" id="${id}">${items}${credits}</div>`;
+}
+
+function openDetail(name){
+  const p=byName[name];
+  const pos=p.net>=0;
+  const settled=Math.abs(p.net)<0.005;
+  const list=pos?p.receives:p.sends;
+  const cls=pos?"collect":"send";
+
+  const rows=list.map(item=>`
+    <div class="pay-row">
+      <div class="avatar">${initial(item.who)}</div>
+      <div class="lead">
+        <div class="n">${item.who}</div>
+        <div class="d">${pos?"is sending you":"you send them"}</div>
+      </div>
+      <div class="val">${money(item.amt)}</div>
+    </div>`).join("");
+
+  const sumLine = list.length>1 ? `<span class="sum">= ${money(Math.abs(p.net))}</span>` : ``;
+  const otherSide = pos
+    ? `<div class="otherside">And you owe <b>nobody</b> once this clears. Just collect. &#127796;</div>`
+    : `<div class="otherside"><b>Nobody</b> owes you here. Send these and you&rsquo;re clear. &#9989;</div>`;
+
+  const explainer = settled ? `` : `
+    <button class="explain-toggle js-toggle" data-controls="exp-panel">
+      <span>Detailed breakdown</span><span class="lg-caret">&rsaquo;</span>
+    </button>
+    <div class="explain" id="exp-panel">
+      <p class="explain-note">${narrativeFor(p,pos)}</p>
+      ${p.directOwes.length?`<div class="ledger-group"><h4>You owe</h4>${p.directOwes.map(e=>ledgerRow(e,'owe')).join("")}</div>`:``}
+      ${p.directOwed.length?`<div class="ledger-group"><h4>Owed to you</h4>${p.directOwed.map(e=>ledgerRow(e,'owed')).join("")}</div>`:``}
+      <div class="ledger-net">Nets to <b class="${pos?'pos':'neg'}">${money(Math.abs(p.net))}</b> ${pos?"in your favor":"that you owe"}</div>
+      <div class="reroute-recap">
+        <span class="rr-label">Which becomes ${plural(list.length,'payment','payments')}</span>
+        ${list.map(s=>`<span class="rr-chip ${pos?'pos':'neg'}">${pos?"from ":"to "}${s.who} &middot; ${money(s.amt)}</span>`).join("")}
+      </div>
+    </div>`;
+
+  card.innerHTML = `
+    <div class="card-head">
+      <div class="avatar ${pos?'pos':'neg'}">${initial(name)}</div>
+      <div class="hi">Hey <b>${name}</b>, here&rsquo;s your tab</div>
+    </div>
+    <div class="headline">
+      <div class="status">${settled?"All square":(pos?"You&rsquo;re owed":"You owe")}</div>
+      <div class="big ${settled?'settled':(pos?'pos':'neg')}" data-target="${Math.abs(p.net)}">${settled?"&#10004;":money(0)}</div>
+    </div>
+    ${settled?`<div class="otherside">You&rsquo;re fully settled. Nothing to send, nothing to chase.</div>`:`
+      <div class="list-label"><span>${pos?"Collect from":"Send to"}</span>${sumLine}</div>
+      <div class="pay ${cls}">${rows}</div>
+      ${otherSide}
+      ${explainer}
+    `}`;
+
+  overview.style.display="none";
+  detail.classList.add("show");
+  window.scrollTo({top:0,behavior:reduceMotion?"auto":"smooth"});
+  if(!settled) countUp(card.querySelector(".big"),Math.abs(p.net));
+}
+
+function closeDetail(){
+  detail.classList.remove("show");
+  overview.style.display="";
+  window.scrollTo({top:0,behavior:reduceMotion?"auto":"smooth"});
+}
+
+function countUp(el,target){
+  if(reduceMotion){ el.textContent=money(target); return; }
+  const dur=900,start=performance.now(),ease=t=>1-Math.pow(1-t,3);
+  (function frame(now){
+    const t=Math.min(1,(now-start)/dur);
+    el.textContent=money(target*ease(t));
+    if(t<1) requestAnimationFrame(frame); else el.textContent=money(target);
+  })(start);
+}
+</script>
+</body>
+</html>

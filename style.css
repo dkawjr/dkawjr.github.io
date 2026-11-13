@@ -13,7 +13,7 @@ hr { height: 0; border: 0; border-top: 1px solid #999; margin: 22px 0; }
 .masthead p { line-height: 1.25; margin: 2px 0; }
 .masthead .home-label { margin-top: 7px; font-size: 18px; font-weight: bold; }
 .home { max-width: 1210px; margin: 0 auto; }
-.signal-divider { display: block; width: 100%; height: 48px; margin: 8px 0 0; pointer-events: none; overflow: visible; }
+.signal-divider { display: block; width: calc(100% + 44px); height: 48px; margin: 8px 0 0 -22px; pointer-events: none; overflow: hidden; }
 .signal-divider path { fill: none; stroke: #1B4D3E; stroke-width: 1.6; stroke-opacity: .85; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 .signal-dot { fill: #C6402F; stroke: #C6402F; stroke-width: 6; vector-effect: non-scaling-stroke; }
 .signal-motion .signal-dot { animation: signal-pulse 1.1s ease-in-out infinite; }
@@ -56,6 +56,7 @@ button { font: inherit; color: #1B4D3E; background: #fff; border: 1px solid #999
 }
 @media (max-width: 620px) {
   body { padding: 0 14px; }
+  .signal-divider { width: calc(100% + 28px); margin-left: -14px; }
   .masthead { padding: 24px 0 0; }
   .masthead h1, .masthead .name { font-size: 23px; }
   .masthead .initial { font-size: 29px; }
